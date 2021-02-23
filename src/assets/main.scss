@@ -1,0 +1,30 @@
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+  /* Crave 1-01 1 */
+  div.logo {
+    position: absolute;
+    width: 53px;
+    height: 36px;
+    left: 30px;
+    top: 33px;
+    background: url('~@/assets/logo.png');
+  }
+
+  /* Crave */
+  h1.craveTitle {
+    position: absolute;
+    width: 127px;
+    height: 63px;
+    left: 30px;
+    top: 81px;
+
+    font-family: Cardo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 65px;
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+  }
+}
