@@ -32,7 +32,7 @@ export const GET_DISHES = gql`
   }
 `;
 export default {
-  name: "FirstScreen",
+  name: "FirstScreen"
 };
 </script>
 

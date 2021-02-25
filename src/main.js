@@ -15,7 +15,7 @@ Vue.config.productionTip = false;
 const link = new HttpLink({
   uri: `${process.env.HASURA_URI}`,
   headers: {
-    "x-hasura-admin-secret": `${process.env.HASURA_ADMIN_KEY}`
+    "x-hasura-admin-secret": `${process.env.VUE_APP_HASURA_ADMIN_KEY}`
   },
   fetch
 });

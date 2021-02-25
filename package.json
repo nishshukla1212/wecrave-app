@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "config": "node -r dotenv/config src/main.js dotenv_config_path=local.env",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
@@ -11,14 +10,12 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "dotenv": "^8.2.0",
     "vue": "^2.6.11",
     "vue-apollo": "^3.0.0-beta.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@akryum/vue-cli-plugin-ssr": "^0.6.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
