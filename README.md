@@ -6,8 +6,6 @@
 
 ```
 npm install
-
-npm run config
 ```
 
 ### Compiles and hot-reloads for development
