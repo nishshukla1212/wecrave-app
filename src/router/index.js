@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import StripeScreen from "../components/StripeScreen.vue";
+import Success from "../components/Success.vue";
+import Cancel from "../components/Cancel.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,16 @@ const routes = [
     path: "/payment",
     name: "StripeScreen",
     component: StripeScreen
+  },
+  {
+    path: "/success",
+    name: "Success",
+    component: Success
+  },
+  {
+    path: "/cancel",
+    name: "Cancel",
+    component: Cancel
   }
 ];
 

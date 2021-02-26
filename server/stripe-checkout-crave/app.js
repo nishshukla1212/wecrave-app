@@ -1,14 +1,20 @@
-const express = require("express");
-var cors = require('cors');
+'use strict';
+
+// eslint-disable-next-line import/no-unresolved
+const express = require('express');
+
 const app = express();
-// const stripe = require("stripe")(
-//   "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"
-// );
+
 const stripe = require("stripe")(
   "sk_test_51IHapJHffvLfnsDrGKqR703ylaKbSADWaxAIhrOX5dI9DtWsq5iK13hV4Uyj4oOFMKwVdmMaxot436Nl9LccPqEB00kcpPJBQi"
 );
 
-app.use(cors);
+
+// Routes
+app.get('/', (req, res) => {
+  res.send(`Request received: ${req.method} - ${req.path}`);
+});
+
 app.post("/create-checkout-session", async (req, res) => {
   const product = await stripe.products.create({
     name: req.body.productID
@@ -33,11 +39,18 @@ app.post("/create-checkout-session", async (req, res) => {
       }
     ],
     mode: "payment",
-    success_url: "https://localhost:8080/success",
-    cancel_url: "https://localhost:8080/cancel"
+    success_url: "https://blissful-kirch-3476bb.netlify.app/#/success",
+    cancel_url: "https://blissful-kirch-3476bb.netlify.app/#/cancel"
   });
 
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.json({ id: session.id });
 });
 
-app.listen(9000, () => console.log(`Listening on port ${9000}!`));
+// Error handler
+app.use((err, req, res) => {
+  console.error(err);
+  res.status(500).send('Internal Serverless Error');
+});
+
+module.exports = app;

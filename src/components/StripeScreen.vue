@@ -19,7 +19,7 @@ export default {
 
       // Call your backend to create the Checkout Session
       const response = await fetch(
-        "https://blaze-302500.uk.r.appspot.com/create-checkout-session",
+        "https://wm235kmiq1.execute-api.us-east-1.amazonaws.com/create-checkout-session",
         {
           method: "POST",
           cache: "default",
