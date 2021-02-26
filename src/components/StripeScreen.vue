@@ -18,15 +18,18 @@ export default {
       );
 
       // Call your backend to create the Checkout Session
-      const response = await fetch("http://localhost:9000/create-checkout-session", {
-        method: "POST",
-        cache: "default",
-        mode: "cors",
-        body: JSON.stringify({
-          productID: this.$store.state.selectedDish.id,
-          price: this.$store.state.selectedDish.totalPrice,
-        }),
-      });
+      const response = await fetch(
+        "https://blaze-302500.uk.r.appspot.com/create-checkout-session",
+        {
+          method: "POST",
+          cache: "default",
+          mode: "cors",
+          body: JSON.stringify({
+            productID: this.$store.state.selectedDish.id,
+            price: this.$store.state.selectedDish.totalPrice,
+          }),
+        },
+      );
 
       console.log(response);
 
