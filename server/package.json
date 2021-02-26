@@ -4,6 +4,7 @@
   "description": "backend for we crave",
   "main": "index.js",
   "scripts": {
+    "start": "npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nish Shukla",

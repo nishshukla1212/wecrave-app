@@ -19,7 +19,7 @@ Vue.component("v-select", vSelect);
 
 Vue.use(VueApollo);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 
 // Create an http link:
 const link = new HttpLink({
