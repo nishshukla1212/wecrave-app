@@ -6,12 +6,12 @@
 
 <script>
 // @ is an alias to /src
-import FirstScreen from "@/components/FirstScreen.vue";
+import FirstScreen from '@/components/FirstScreen.vue';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    FirstScreen
-  }
+    FirstScreen,
+  },
 };
 </script>

@@ -5,5 +5,5 @@
 </template>
 
 <style lang="scss">
-@import "~@/assets/main.scss";
+@import "vue-select/src/scss/vue-select.scss";
 </style>
