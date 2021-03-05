@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import StripeScreen from "../components/StripeScreen.vue";
 import SecondScreen from "../components/SecondScreen.vue";
+import DeliveryScreen from "../components/DeliveryScreen.vue";
 import Success from "../components/Success.vue";
 import Cancel from "../components/Cancel.vue";
 
@@ -23,6 +24,11 @@ const routes = [
     path: "/secondScreen",
     name: "SecondScreen",
     component: SecondScreen
+  },
+  {
+    path: "/delivery",
+    name: "DeliveryScreen",
+    component: DeliveryScreen
   },
   {
     path: "/success",

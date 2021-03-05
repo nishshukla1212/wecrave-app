@@ -3,6 +3,7 @@
     <div class="food-preview">
       <img :src="this.previewImageUrl" alt="IMG" />
     </div>
+    <div @click="goToNextPage()" class="continue btn"><span class="continue-text">Continue</span></div>
   </div>
 </template>
 <script>
@@ -15,7 +16,12 @@ export default {
         this.$store.state.selectedDish[0].picID +
         ".jpg"
     };
-  }
+  },
+  methods: {
+    goToNextPage(){
+      this.$router.push("/delivery");
+    }
+  },
 };
 </script>
 <style lang="scss">
@@ -30,6 +36,7 @@ div.food-preview {
   img {
     width: 315px;
     height: 312px;
+    border-radius:30px;
   }
 }
 </style>
