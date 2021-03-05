@@ -143,7 +143,7 @@ export default {
     selectDish(id) {
       let selectedDish = this.$store.state.dishes.filter((dish) => dish.id === id);
       this.$store.commit("addSelectedDish", selectedDish);
-      this.$router.push("/payment");
+      this.$router.push("/secondScreen");
     },
     filterResults() {
       console.log("in filter results");

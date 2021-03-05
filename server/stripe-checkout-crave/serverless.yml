@@ -1,7 +1,0 @@
-org: nish12shukla
-app: stripe-checkout-crave
-component: express
-name: express-starter
-
-inputs:
-  src: ./

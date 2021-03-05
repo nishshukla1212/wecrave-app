@@ -1,27 +1,18 @@
 'use strict';
 
-// eslint-disable-next-line import/no-unresolved
-const express = require('express');
-
-const app = express();
-
 const stripe = require("stripe")(
   "sk_test_51IHapJHffvLfnsDrGKqR703ylaKbSADWaxAIhrOX5dI9DtWsq5iK13hV4Uyj4oOFMKwVdmMaxot436Nl9LccPqEB00kcpPJBQi"
 );
 
 
-// Routes
-app.get('/', (req, res) => {
-  res.send(`Request received: ${req.method} - ${req.path}`);
-});
-
-app.post("/create-checkout-session", async (req, res) => {
+module.exports.hello = async (event) => {
+  console.log(event);
   const product = await stripe.products.create({
-    name: req.body.productID
+    name: event.queryStringParameters.productID
   });
   const price = await stripe.prices.create({
     product: product.id,
-    unit_amount: req.body.price,
+    unit_amount: Number(event.queryStringParameters.price),
     currency: "usd"
   });
   const session = await stripe.checkout.sessions.create({
@@ -33,7 +24,7 @@ app.post("/create-checkout-session", async (req, res) => {
           product_data: {
             name: product.id
           },
-          unit_amount: price.id
+          unit_amount: Number(price.unit_amount)
         },
         quantity: 1
       }
@@ -43,14 +34,20 @@ app.post("/create-checkout-session", async (req, res) => {
     cancel_url: "https://blissful-kirch-3476bb.netlify.app/#/cancel"
   });
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.json({ id: session.id });
-});
-
-// Error handler
-app.use((err, req, res) => {
-  console.error(err);
-  res.status(500).send('Internal Serverless Error');
-});
-
-module.exports = app;
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(
+      {
+        sessionID: await session.id
+      },
+      null,
+      2
+    ),
+  };
+};
