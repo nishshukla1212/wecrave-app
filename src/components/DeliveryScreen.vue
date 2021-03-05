@@ -49,9 +49,7 @@
       <p class="etaTime" style="margin-left:12%">30 mins</p>
     </div>
 
-    <div id="checkout-button" class="continue btn" @click="redirectCheckout()">
-      <span class="continue-text">Continue</span>
-    </div>
+    <div @click="goToNextPage()" class="continue btn"><span class="continue-text">Continue</span></div>
   </div>
 </template>
 <script>
@@ -89,6 +87,9 @@ export default {
       input.addEventListener("change", () => {
         input.innerText = autocomplete
       });
+    },
+    goToNextPage(){
+      this.$router.push("/payment");
     }
   }
 };
