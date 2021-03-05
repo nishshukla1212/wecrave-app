@@ -6,6 +6,7 @@
       style="margin-top: 184px !important;"
       name="name"
       id="name"
+      v-model="name"
       placeholder="Name"
     />
     <input
@@ -13,6 +14,7 @@
       class="text-field"
       name="phone"
       id="phone"
+      v-model="phone"
       placeholder="Phone"
     />
     <input
@@ -20,6 +22,7 @@
       class="text-field"
       name="email"
       id="email"
+      v-model="email"
       placeholder="Email"
     />
     <input
@@ -34,6 +37,7 @@
       class="text-field"
       name="address2"
       id="address2"
+      v-model="address2"
       placeholder="Apt No."
     />
     <input
@@ -41,6 +45,7 @@
       class="text-field"
       name="instructions"
       id="instructions"
+      v-model="instructions"
       style="margin-bottom:20px;"
       placeholder="Instructions"
     />
@@ -57,6 +62,12 @@ export default {
   name: "DeliveryScreen",
   data() {
     return {
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      address2: '',
+      instructions: '',
       totalPrice: this.$store.state.selectedDish[0].totalPrice || 0.0,
       custom_tip_display: false
     };
@@ -89,6 +100,17 @@ export default {
       });
     },
     goToNextPage(){
+      this.$store.commit("addInfluencerName", this.$store.state.selectedDish[0].influencerName);
+      this.$store.commit("addName", this.name);
+      this.$store.commit("addEmail", this.email);
+      this.$store.commit("addPhone", this.phone);
+      this.$store.commit("addStreetAddress", document.getElementById("address").value);
+      this.$store.commit("addAptNo", this.address2);
+      this.$store.commit("addDeliveryNotes", this.instructions);
+      this.$store.commit("addZone", this.$store.state.selectedDish[0].zone);
+      this.$store.commit("addOrderLink", this.$store.state.selectedDish[0].orderLink);
+      this.$store.commit("addRestaurantName", this.$store.state.selectedDish[0].restaurantName);
+      this.$store.commit("addDishName", this.$store.state.selectedDish[0].dishName);
       this.$router.push("/payment");
     }
   }

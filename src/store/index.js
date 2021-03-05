@@ -6,40 +6,21 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     order: {
-      firstName: 'Sandwich',
-      lastName: 'Pants',
+      orderID: '',
+      name: 'Sandwich',
       influencerName: '',
       email: 'emailmefood@crave.com',
       phone: '50050050000',
       restaurantName: 'Tasty Delicious',
-      foodName: 'Burger',
-      address: {
-        line1: '1 Times Square',
-        line2: '01',
-        zip: '10101',
-        city: 'New York',
-        state: 'NY',
-      },
-      paymentInfo: {
-        firstName: 'PB',
-        lastName: 'AND J',
-        cardNo: 'xxx-xxx-xxx',
-        exp: 'xx/xx',
-        cvv: 'xxx',
-        address: {
-          line1: '1 Times Square',
-          line2: '01',
-          zip: '10101',
-          city: 'New York',
-          state: 'NY',
-        },
-      },
+      dishName: 'Burger',
+      orderLink: '',
+      zone: '',
+      streetAddress : '',
+      aptNo  : '',
+      tip  : 0.00,
+      total  : 0.00,
       successful: false,
-      tip: 0.0,
-      total: 0.0,
-      deliveryNotes: 'please call',
-      orderNo: 'initial order no',
-      orderPic: 'initial order pic',
+      deliveryNotes: '',
     },
     dishes: [],
     selectedDish:{},
@@ -51,17 +32,14 @@ export default new Vuex.Store({
     addSelectedDish(state, dish) {
       state.selectedDish = dish
     },
-    addFirstName(state, firstName) {
-      state.order.firstName = firstName
+    addOrderID(state, orderID) {
+      state.order.orderID = orderID
     },
-    addLastName(state, lastName) {
-      state.order.lastName = lastName
+    addName(state, name) {
+      state.order.name = name
     },
-    addIgHandle(state, IgHandle) {
-      state.order.igHandle = IgHandle
-    },
-    addSrcIgHandle(state, srcIgHandle) {
-      state.order.srcIgHandle = srcIgHandle
+    addInfluencerName(state, influencerName) {
+      state.order.influencerName = influencerName
     },
     addEmail(state, email) {
       state.order.email = email
@@ -72,39 +50,29 @@ export default new Vuex.Store({
     addRestaurantName(state, restaurantName) {
       state.order.restaurantName = restaurantName
     },
-    addFoodName(state, foodName) {
-      state.order.foodName = foodName
+    addDishName(state, dishName) {
+      state.order.dishName = dishName
     },
     addTotal(state, total) {
       state.order.total = total
     },
-    addOrderNo(state, orderNo) {
-      state.order.orderNo = orderNo
+    addTip(state, tip) {
+      state.order.tip = tip
     },
-    addAddress(state, address) {
-      state.order.address = {
-        line1: address.line1,
-        line2: address.line2,
-        zip: address.zip,
-        city: address.city,
-        state: address.state,
-      }
+    addStreetAddress(state, streetAddress) {
+      state.order.streetAddress = streetAddress
     },
-    addPayment(state, paymentInfo) {
-      state.order.paymentInfo = {
-        firstName: paymentInfo.firstName,
-        lastName: paymentInfo.lastName,
-        cardNo: paymentInfo.cardNo,
-        exp: paymentInfo.exp,
-        cvv: paymentInfo.cvv,
-        address: {
-          line1: paymentInfo.address.line1,
-          line2: paymentInfo.address.line2,
-          zip: paymentInfo.address.zip,
-          city: paymentInfo.address.city,
-          state: paymentInfo.address.state,
-        },
-      }
+    addAptNo(state, aptNo) {
+      state.order.aptNo = aptNo
+    },
+    addDeliveryNotes(state, deliveryNotes) {
+      state.order.deliveryNotes = deliveryNotes
+    },
+    addZone(state, zone) {
+      state.order.zone = zone
+    },
+    addOrderLink(state, orderLink) {
+      state.order.orderLink = orderLink
     },
     addSuccessState(state, successful) {
       state.order.successful = successful

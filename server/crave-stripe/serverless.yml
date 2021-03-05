@@ -18,3 +18,18 @@ functions:
               querystrings:
                 productID: true
                 price: true
+                orderID: true
+  sendEmail:
+    handler: handler.sendEmail
+    events:
+      - http:
+          path: /send-email
+          method: post
+          cors:
+            origin: '*'
+          request:
+            parameters:
+              querystrings:
+                productID: true
+                price: true
+                orderID: true           
