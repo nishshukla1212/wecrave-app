@@ -5,6 +5,7 @@ const stripe = require("stripe")(
 );
 let nodemailer = require("nodemailer");
 let aws = require("@aws-sdk/client-ses");
+
 const ses = new aws.SES({
   apiVersion: "2010-12-01",
   region: "us-east-1"
@@ -62,7 +63,7 @@ module.exports.hello = async event => {
   };
 };
 
-module.exports.sendEmail = async (event, context, callback) => {
+module.exports.sendEmail = (event, context, callback) => {
   const response = {
     statusCode: 200,
     headers: {
@@ -76,7 +77,7 @@ module.exports.sendEmail = async (event, context, callback) => {
   let order = JSON.parse(event.body).order[0];
   transporter.sendMail(
     {
-      from: "nish@wecrave.co",
+      from: "nish.12.shukla@gmail.com",
       to: order.email.toString(),
       subject: `Crave - ${order.orderID.toString()}`,
       html: `
@@ -95,49 +96,34 @@ module.exports.sendEmail = async (event, context, callback) => {
       tip  : ${order.tip}%<br>
       total  : ${order.total}<br>
       deliveryNotes: ${order.deliveryNotes}<br>
-      `,
-      ses: {
-        // optional extra arguments for SendRawEmail
-      }
+      `
     },
     (err, info) => {
-      console.log(info.envelope);
-      console.log(info.messageId);
       if (!err) {
         transporter.sendMail(
           {
-            from: "nish@wecrave.co",
+            from: "nish.12.shukla@gmail.com",
             to: order.email.toString(),
             subject: `Crave - ${order.orderID.toString()}`,
             html: `
-            New Order Arrived!<br>
+            Thank you for your Crave order!<br>
             Order ID: ${order.orderID}<br>
             name: ${order.name}<br>
-            influencerName: ${order.influencerName}<br>
-            email: ${order.email}<br>
-            phone: ${order.phone}<br>
-            restaurantName: ${order.restaurantName}<br>
-            dishName: ${order.dishName}<br>
-            orderLink: ${order.orderLink}<br>
-            zone: ${order.zone}<br>
-            streetAddress : ${order.streetAddress}<br>
-            aptNo  : ${order.aptNo}<br>
-            tip  : ${order.tip}%<br>
-            total  : ${order.total}<br>
-            deliveryNotes: ${order.deliveryNotes}<br>
             `,
             ses: {
               // optional extra arguments for SendRawEmail
             }
           },
           (err2, info2) => {
-            console.log(info2.envelope);
-            console.log(info2.messageId);
             if (!err2) {
               callback(null, response);
+            } else {
+              console.log(err2);
             }
           }
         );
+      } else {
+        console.log(err);
       }
     }
   );
