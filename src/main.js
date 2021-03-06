@@ -6,16 +6,26 @@ import VueApollo from "vue-apollo";
 import store from "./store";
 import router from "./router";
 import App from "./App.vue";
+import vSelect from "vue-select";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUtensils } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUtensils)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.component("v-select", vSelect);
 
 Vue.use(VueApollo);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 
 // Create an http link:
 const link = new HttpLink({
-  uri: `${process.env.HASURA_URI}`,
+  uri: `https://crave-restaurants.hasura.app/v1/graphql`,
   headers: {
-    "x-hasura-admin-secret": `${process.env.VUE_APP_HASURA_ADMIN_KEY}`
+    "x-hasura-admin-secret": `ndnfijnfnifijfne!!njknjjndscm`
   },
   fetch
 });

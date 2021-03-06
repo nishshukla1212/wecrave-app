@@ -1,0 +1,35 @@
+org: nish12shukla
+app: crave-stripe
+service: crave-stripe
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: /
+          method: get
+          request:
+            parameters:
+              querystrings:
+                productID: true
+                price: true
+                orderID: true
+  sendEmail:
+    handler: handler.sendEmail
+    events:
+      - http:
+          path: /send-email
+          method: post
+          cors:
+            origin: '*'
+          request:
+            parameters:
+              querystrings:
+                productID: true
+                price: true
+                orderID: true           
