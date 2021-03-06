@@ -27,12 +27,20 @@ export const GET_ORDER = gql`
     }
   }
 `;
+export const UPDATE_ORDER = gql`
+  mutation UPDATE_ORDER($orderID: String!) {
+    update_crave_orders_by_pk(pk_columns: { orderID: $orderID }) {
+      successful
+    }
+  }
+`;
 export default {
   name: "Success",
   data() {
     return {
       orderID: "",
-      order: {}
+      order: {},
+      crave_order: {},
     };
   },
   mounted() {
@@ -44,6 +52,8 @@ export default {
   methods: {
     async sendEmail() {
       let orderObject = await this.query();
+      console.log(orderObject);
+      this.$store.commit("addOrderID", orderObject.orderID);
       const response = await fetch(
         `https://g3ahlnhgjd.execute-api.us-east-1.amazonaws.com/dev/send-email`,
         {
@@ -55,6 +65,17 @@ export default {
       );
       let responseJSON = await response.json();
       console.log(responseJSON);
+      this.crave_order = await this.$apollo
+        .mutate({
+          mutation: UPDATE_ORDER,
+          variables: { orderID: this.$store.state.order.orderID }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+      if (response.statusCode === 200) {
+        this.$router.push("/feedback");
+      }
     },
     async query() {
       let variables = {};

@@ -4,14 +4,46 @@
 
  /* Crave 1-01 1 */
  div.logo-container {
-   width: 53px;
+   width: 100%;
    height: 36px;
    left: 30px;
    top: 33px;
+
+   h1.pageTitle {
+     padding-right: 5%;
+     font-family: Nunito;
+     font-style: normal;
+     font-weight: bold;
+     font-size: 20px;
+     line-height: 27px;
+     display: flex;
+     align-items: center;
+     text-align: center;
+     margin-left: auto;
+     margin-right: auto;
+
+     color: #000000;
+   }
  }
 
  img.logo {
    background-image: url('~@/assets/logo.png');
+ }
+
+ .pageHeader{
+  width: 315px;
+  height: 40px;
+  margin-left: 30px;
+  padding-top: 5%;
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 44px;
+  display: flex;
+  align-items: center;
+  
+  color: #000000;
  }
 
  div.landing-page {
@@ -26,25 +58,31 @@
 
  .selectBox {
    width: 80%;
+
+   select {
+     background: #FFFFFF;
+     /* gray/300 */
+     padding: 1%;
+     margin-top: 2%;
+     border: 1px solid #D4D4D8;
+     box-sizing: border-box;
+     border-radius: 4px;
+     width: 100%;
+     height: 43px;
+     font-family: Nunito;
+     font-style: normal;
+     font-weight: normal;
+     font-size: 16px;
+     color: #71717A;
+   }
  }
 
- /* Crave */
- h1.craveTitle {
-   position: absolute;
-   width: 127px;
-   height: 63px;
-   left: 30px;
-   top: 81px;
-
-   font-family: Cardo;
-   font-style: normal;
-   font-weight: bold;
-   font-size: 48px;
-   line-height: 65px;
-   display: flex;
-   align-items: center;
-
-   color: #000000;
+ span.close {
+   width: 24px;
+   height: 24px;
+   margin-left: 24px;
+   margin-top: 5%;
+   padding-top: 5%;
  }
 
  span.active {
@@ -55,6 +93,7 @@
  div.subtotalRow {
    width: 100%;
    margin-left: 1%;
+   margin-top: 10%;
  }
 
  span.subtotal {
@@ -63,7 +102,6 @@
    width: 81px;
    height: 24px;
    left: 30px;
-   top: 680px;
    font-family: Nunito;
    font-style: normal;
    font-weight: bold;
@@ -82,7 +120,6 @@
    width: 50%;
    height: 24px;
    right: 0;
-   top: 680px;
    font-family: Nunito;
    font-style: normal;
    font-weight: bold;
@@ -111,15 +148,15 @@
    font-weight: bold;
    font-size: 500;
  }
+ 
 
  div.tip {
+   box-sizing: border-box;
+   display: block;
    position: relative;
-   left: 0%;
-   right: 0%;
-   top: 477px;
-   bottom: 0%;
    width: 375px;
    height: 356px;
+   margin: 5% auto;
 
    /* white */
    background: #FFFFFF;
@@ -187,20 +224,24 @@
    }
  }
 
- div.continue {
+ p.error {
+   color: #F55842;
+   font-size: medium;
+   text-align: center;
+   font: nunito;
+   margin-bottom: -2%;
+ }
+
+ button div.continue {
    display: flex;
    flex-direction: row;
    align-items: center;
    padding: 8px 16px;
-
-   width: 90%;
-
-   position: absolute;
-   margin-left: 15px;
-   margin-right: 15px;
-   top: 85.71%;
-   bottom: 9.36%;
-
+   min-width: 315px;
+   min-height: 40px;
+   margin-left: 30px;
+   margin-top: 38%;
+   margin-bottom: 5%;
    background: #F55842;
    border-radius: 999px;
 
@@ -220,7 +261,7 @@
    bottom: 0px;
    width: 315px;
    height: 48px;
-   margin-bottom: 32px;
+   margin-top: 40px;
    margin-left: 30px;
    font-size: 16px;
    padding: 2%;
@@ -233,40 +274,57 @@
    box-sizing: border-box;
    border-radius: 4px;
  }
- p.eta{
-  margin-left: 30px;
-  width: 203px;
-  height: 24px;
-  left: 30px;
-  top: 584px;
-  
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 22px;
-  display: flex;
-  align-items: center;
-  
-  color: rgba(63, 63, 70, 0.5);
+
+ div.vue-star-rating {
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 2%;
  }
 
- p.etaTime{
-  width: 59px;
-  height: 24px;
-  left: 286px;
-  top: 584px;
-  
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 22px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  
-  color: rgba(63, 63, 70, 0.85);
+ svg.vue-star-rating-star {
+   width: 25px !important;
+ }
+
+ textarea.remarksBox {
+   margin-left: auto;
+   margin-right: auto;
+   display: block;
+ }
+
+ p.eta {
+   margin-left: 30px;
+   width: 203px;
+   height: 24px;
+   left: 30px;
+   top: 584px;
+
+   font-family: Nunito;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 16px;
+   line-height: 22px;
+   display: flex;
+   align-items: center;
+
+   color: rgba(63, 63, 70, 0.5);
+ }
+
+ p.etaTime {
+   width: 59px;
+   height: 24px;
+   left: 286px;
+   top: 584px;
+
+   font-family: Nunito;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 16px;
+   line-height: 22px;
+   display: flex;
+   align-items: center;
+   text-align: center;
+
+   color: rgba(63, 63, 70, 0.85);
  }
 
  /*
