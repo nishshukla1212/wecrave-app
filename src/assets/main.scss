@@ -30,20 +30,20 @@
    background-image: url('~@/assets/logo.png');
  }
 
- .pageHeader{
-  width: 315px;
-  height: 40px;
-  margin-left: 30px;
-  padding-top: 5%;
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 44px;
-  display: flex;
-  align-items: center;
-  
-  color: #000000;
+ .pageHeader {
+   width: 315px;
+   height: 40px;
+   margin-left: 30px;
+   padding-top: 5%;
+   font-family: Nunito;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 32px;
+   line-height: 44px;
+   display: flex;
+   align-items: center;
+
+   color: #000000;
  }
 
  div.landing-page {
@@ -148,7 +148,7 @@
    font-weight: bold;
    font-size: 500;
  }
- 
+
 
  div.tip {
    box-sizing: border-box;
@@ -240,7 +240,7 @@
    min-width: 315px;
    min-height: 40px;
    margin-left: 30px;
-   margin-top: 38%;
+   margin-top: 50%;
    margin-bottom: 5%;
    background: #F55842;
    border-radius: 999px;
@@ -286,9 +286,10 @@
  }
 
  textarea.remarksBox {
-   margin-left: auto;
-   margin-right: auto;
+   margin-left: 30px;
+   width: 250px;
    display: block;
+   border: #000000 1px solid;
  }
 
  p.eta {

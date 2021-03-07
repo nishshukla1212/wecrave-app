@@ -62,8 +62,8 @@
             class="text-field"
             name="address"
             id="address"
-            placeholder="Address"
             v-model="address"
+            placeholder="Address"
           />
           <p class="error">{{ errors[0] }}</p>
         </ValidationProvider>
@@ -124,16 +124,18 @@ extend("numeric", {
 
 export default {
   name: "DeliveryScreen",
-  data: () => ({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    address2: "",
-    instructions: "",
-    totalPrice: this.$store.state.selectedDish[0].totalPrice || 0.0,
-    custom_tip_display: false
-  }),
+  data() {
+    return {
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      address2: '',
+      instructions: '',
+      totalPrice: this.$store.state.selectedDish[0].totalPrice || 0.0,
+      custom_tip_display: false
+    };
+  },
 
   components: {
     ValidationObserver,
@@ -169,7 +171,10 @@ export default {
       // eslint-disable-next-line no-undef
       const autocomplete = new google.maps.places.Autocomplete(input, options);
       input.addEventListener("change", () => {
-        input.innerText = autocomplete;
+        input.innerHTML = autocomplete;
+        let fieldId = Object.keys(autocomplete.gm_bindings_.fields)[0]
+        input.value = autocomplete.gm_bindings_.fields[fieldId.toString()].De.formattedPrediction
+        this.address=autocomplete.gm_bindings_.fields[fieldId.toString()].De.formattedPrediction
       });
     },
     goToNextPage() {

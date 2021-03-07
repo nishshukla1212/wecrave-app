@@ -1,60 +1,62 @@
 <template>
-  <div class="landing-page">
-    <div class="logo-container">
-      <img src="~@/assets/logo.png" width="53px" height="36px" />
-    </div>
-    <h1 class="craveTitle">
-      Crave
-    </h1>
-    <p class="craveSubtitle">
-      Content-first food discovery platform
-    </p>
-    <div class="selectBox">
-      <select v-on:change="filterResults()" v-model="selectedInfluencer">
-        <option
-          :key="influencer"
-          v-for="influencer in influencerNames"
-          :value="influencer"
-        >
-          {{ influencer }}
-        </option>
-      </select>
-    </div>
-    <div class="selectBox">
-      <select v-model="zone" v-on:change="filterResults()">
-        <option :key="zone" v-for="zone in zones" :value="zone">
-          {{ zone }}
-        </option>
-      </select>
-    </div>
-    <input
-      type="text"
-      class="text-field"
-      style="margin-left:0px;margin-top: 2%;width:80%;height:43px"
-      v-model="dishName"
-      name="dishName"
-      id="dishName"
-      placeholder="Search Dish"
-      @keypress="filterResults()"
-    />
+  <div class="paddedleft">
+    <div class="landing-page">
+      <div class="logo-container">
+        <img src="~@/assets/logo.png" width="53px" height="36px" />
+      </div>
+      <h1 class="craveTitle">
+        Crave
+      </h1>
+      <p class="craveSubtitle">
+        Content-first food discovery platform
+      </p>
+      <div class="selectBox">
+        <select v-on:change="filterResults()" v-model="selectedInfluencer">
+          <option
+            :key="influencer"
+            v-for="influencer in influencerNames"
+            :value="influencer"
+          >
+            {{ influencer }}
+          </option>
+        </select>
+      </div>
+      <div class="selectBox">
+        <select v-model="zone" v-on:change="filterResults()">
+          <option :key="zone" v-for="zone in zones" :value="zone">
+            {{ zone }}
+          </option>
+        </select>
+      </div>
+      <input
+        type="text"
+        class="text-field"
+        style="margin-left:0px;margin-top: 2%;width:80%;height:43px"
+        v-model="dishName"
+        name="dishName"
+        id="dishName"
+        placeholder="Search Dish"
+        @keypress="filterResults()"
+      />
 
-    <div class="container">
-      <div class="gallery">
-        <div
-          :key="url.id"
-          v-for="url in pictureURLS"
-          class="gallery-item"
-          tabindex="0"
-        >
-          <img :src="url.img" class="gallery-image" alt="" />
-          <div class="gallery-item-info" @click="selectDish(url.id)">
-            <ul class="noPadding">
-              <li class="gallery-item-dish-name">
-                <span class="visually-hidden">Dish:</span
-                ><font-awesome-icon icon="utensils" aria-hidden="true" />
-                {{ url.description }}
-              </li>
-            </ul>
+      <div class="container">
+        <div class="gallery">
+          <div
+            :key="url.id"
+            v-for="url in pictureURLS"
+            class="gallery-item"
+            tabindex="0"
+          >
+            <img :src="url.img" class="gallery-image" alt="" />
+            <div class="gallery-item-info" @click="selectDish(url.id)">
+              <ul class="noPadding">
+                <li class="gallery-item-dish-name">
+                  <span class="visually-hidden">Dish:</span
+                  ><font-awesome-icon icon="utensils" aria-hidden="true" />
+                  {{ url.description }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -226,5 +228,9 @@ export default {
   align-items: center;
 
   color: rgba(63, 63, 70, 0.62);
+}
+.paddedleft{
+  padding-left: 50px;
+  padding-top: 25px;
 }
 </style>

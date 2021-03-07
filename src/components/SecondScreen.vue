@@ -113,6 +113,7 @@ div.food-preview {
     font-size: 16px;
     display: flex;
     margin-right: 1%;
+    margin-left: 0;
     color: rgba(63, 63, 70, 0.5);
   }
   p.dishPrice {

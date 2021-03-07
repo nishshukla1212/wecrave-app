@@ -1,6 +1,21 @@
 <template>
-  <div>
-    <h1>It is successful</h1>
+  <div class="landing-page">
+    <div class="logo-container">
+      <div class="row">
+        <h1 class="pageTitle" style="margin-left:auto; margin-right:auto;">
+          Confirmation
+        </h1>
+      </div>
+    </div>
+    <div @click="goToNextPage()" class="pageBody">
+      <div class="confirmationText">
+        Your food is on the way!
+      </div>
+      <div class="confirmationLogo">
+        <img src="~@/assets/logo.png" width="141px" height="96px" />
+      </div>
+      <div class="orderID">Order ID - {{ orderID }}</div>
+    </div>
   </div>
 </template>
 <script>
@@ -40,7 +55,7 @@ export default {
     return {
       orderID: "",
       order: {},
-      crave_order: {},
+      crave_order: {}
     };
   },
   mounted() {
@@ -90,7 +105,49 @@ export default {
           console.log(res);
         });
       return this.order.data.crave_orders;
+    },
+    goToNextPage() {
+      this.$router.push("/feedback");
     }
   }
 };
 </script>
+<style lang="scss">
+.confirmationLogo {
+  width: 141px;
+  height: 96px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.confirmationText {
+  width: 315px;
+  height: 72px;
+
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 44px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10%;
+  color: #000000;
+}
+.orderID {
+  @extend .confirmationText;
+  margin-top: 10%;
+}
+.pageBody {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
