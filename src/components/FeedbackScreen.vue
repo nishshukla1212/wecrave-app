@@ -18,27 +18,39 @@
       <star-rating
         :show-rating="false"
         active-color="#F55842"
-        v-model="feedbackRequest.food_review"
+        v-model="food_review"
       ></star-rating>
       <p>How do you like the app?</p>
       <star-rating
         :show-rating="false"
         active-color="#F55842"
-        v-model="feedbackRequest.app_review"
+        v-model="app_review"
       ></star-rating>
       <p>Would you recommend this app to your friends?</p>
       <star-rating
         :show-rating="false"
         active-color="#F55842"
-        v-model="feedbackRequest.app_recommend"
+        v-model="app_recommend"
       ></star-rating>
       <p>What else would you like to share with us?</p>
-      <textarea rows="6" class="remarksBox" v-model="feedbackRequest.remarks"></textarea>
+      <textarea
+        rows="6"
+        class="remarksBox"
+        v-model="remarks"
+      ></textarea>
       <button>
         <div class="continue btn">
           <span class="continue-text">Submit</span>
         </div>
       </button>
+      <div class="thanks">
+        <div class="thanksText">
+          Thank you for your feedback!
+        </div>
+        <div class="thanksLogo">
+          <img src="~@/assets/logo.png" width="71px" height="48px" />
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -63,29 +75,39 @@ export default {
     StarRating
   },
   data: () => ({
-    orderID: "",
+    orderID: this.$router.query.orderID,
     feedbackResponse: {},
-    feedbackRequest: {
-      food_review: "",
-      app_review: "",
-      app_recommend: "",
-      remarks: ""
-    }
+    app_recommend: "",
+    food_review: "",
+    app_review: "",
+    remarks: "",
+    successful: false,
   }),
 
   mounted() {
-    this.orderID = this.$store.state.order.orderID;
+    this.orderID = this.$route.query.orderID;
   },
   methods: {
     async submit() {
+      console.log(this.$route.query.orderID)
       this.feedbackResponse = await this.$apollo
         .mutate({
           mutation: ADD_FEEDBACK,
-          variables: { object: this.feedbackRequest }
+          variables: {
+            object: {
+              orderID: this.$route.query.orderID,
+              food_review: this.food_review || 0,
+              app_review: this.app_review || 0,
+              app_recommend: this.app_recommend > 0 ? true : false,
+              remarks: this.remarks || ""
+            }
+          }
         })
         .catch(res => {
           console.log(res);
         });
+        document.getElementsByClassName("thanks")[0].classList.remove("thanks")
+      this.successful = true;
     }
   }
 };
@@ -107,7 +129,7 @@ export default {
 
     color: #000000;
   }
-  .vue-star-rating{
+  .vue-star-rating {
     text-align: left;
     margin-left: 15px;
     margin-right: 0px;
@@ -116,5 +138,33 @@ export default {
 .feedbackPadedTop {
   margin-top: 25%;
   margin-bottom: 25%;
+}
+
+.thanks{
+  display: none;
+}
+
+.thanksText {
+  width: 315px;
+  height: 32px;
+  margin-right: auto;
+  margin-left: 60px;
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #000000;
+}
+
+.thanksLogo {
+  width: 71px;
+  height: 48px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

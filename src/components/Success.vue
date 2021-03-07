@@ -43,9 +43,15 @@ export const GET_ORDER = gql`
   }
 `;
 export const UPDATE_ORDER = gql`
-  mutation UPDATE_ORDER($orderID: String!) {
-    update_crave_orders_by_pk(pk_columns: { orderID: $orderID }) {
-      successful
+  mutation UPDATE_ORDER(
+    $successful: Boolean = false
+    $orderID: String_comparison_exp = {}
+  ) {
+    update_crave_orders(
+      where: { orderID: $orderID }
+      _set: { successful: $successful }
+    ) {
+      affected_rows
     }
   }
 `;
@@ -83,14 +89,16 @@ export default {
       this.crave_order = await this.$apollo
         .mutate({
           mutation: UPDATE_ORDER,
-          variables: { orderID: this.$store.state.order.orderID }
+          variables: {
+            successful: false,
+            orderID: {
+              _eq: this.orderID
+            }
+          }
         })
         .catch(res => {
           console.log(res);
         });
-      if (response.statusCode === 200) {
-        this.$router.push("/feedback");
-      }
     },
     async query() {
       let variables = {};
@@ -107,7 +115,7 @@ export default {
       return this.order.data.crave_orders;
     },
     goToNextPage() {
-      this.$router.push("/feedback");
+      this.$router.push({path: "/feedback",  query: { orderID: this.orderID }});
     }
   }
 };
