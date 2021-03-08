@@ -1,5 +1,30 @@
 <template>
   <div class="landing-page">
+    <div class="logo-container">
+      <div class="row">
+        <button @click="goBack()">
+          <span class="close">X</span>
+        </button>
+        <h1 class="pageTitle">
+          Checkout
+        </h1>
+      </div>
+    </div>
+    <h1 class="pageHeader">
+      Items
+    </h1>
+    <div class="row subtotalRow" style="margin-left:0px">
+      <span class="subtotal" style="width:50%"
+        >1 x {{ this.$store.state.selectedDish[0].dishName }}</span
+      >
+      <span class="subtotalPrice" style="margin-left:0px"
+        >$ {{ this.$store.state.selectedDish[0].totalPrice }}</span
+      >
+    </div>
+    <p class="restaurantName">
+      {{ this.$store.state.selectedDish[0].restaurantName }}
+    </p>
+    <hr width=80% style="margin:5% auto;">
     <div class="tip">
       <p class="tip-text">Add Tip</p>
       <div class="row tip-row">
@@ -22,9 +47,11 @@
         <span class="subtotal">Subtotal</span>
         <span class="subtotalPrice">$ {{ this.totalPrice }}</span>
       </div>
-    </div>
-    <div id="checkout-button" class="continue btn" @click="redirectCheckout()">
-      <span class="continue-text">Continue</span>
+      <button id="checkout-button" @click="redirectCheckout()">
+        <div class="continue btn" style="margin-top:20%">
+          <span class="continue-text">Continue</span>
+        </div>
+      </button>
     </div>
   </div>
 </template>
@@ -67,6 +94,9 @@ export default {
     this.addTipListeners();
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     addTipListeners() {
       const tip_15 = document.getElementById("tip-15");
       const tip_20 = document.getElementById("tip-20");
@@ -138,8 +168,8 @@ export default {
       console.log(this.$store.state.selectedDish[0].id);
 
       let price_total = String(this.totalPrice).split(".");
-      if(price_total[1].length === 1){
-        price_total[1] = price_total[1] + '0'
+      if (price_total[1].length === 1) {
+        price_total[1] = price_total[1] + "0";
       }
       let price = Number(price_total[0] + price_total[1]);
 
@@ -180,4 +210,17 @@ export default {
   }
 };
 </script>
-<style></style>
+<style lang="scss">
+p.restaurantName {
+  width: 168px;
+  height: 24px;
+  margin-left: 30px;
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  margin-right: 1%;
+  color: rgba(63, 63, 70, 0.5);
+}
+</style>

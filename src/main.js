@@ -6,7 +6,6 @@ import VueApollo from "vue-apollo";
 import store from "./store";
 import router from "./router";
 import App from "./App.vue";
-import vSelect from "vue-select";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUtensils } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -14,8 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faUtensils)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-Vue.component("v-select", vSelect);
 
 Vue.use(VueApollo);
 
