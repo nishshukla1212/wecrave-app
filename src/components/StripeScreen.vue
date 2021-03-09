@@ -5,26 +5,22 @@
         <button @click="goBack()">
           <span class="close">X</span>
         </button>
-        <h1 class="pageTitle">
-          Checkout
-        </h1>
+        <h1 class="pageTitle">Checkout</h1>
       </div>
     </div>
-    <h1 class="pageHeader">
-      Items
-    </h1>
-    <div class="row subtotalRow" style="margin-left:0px">
-      <span class="subtotal" style="width:50%"
+    <h1 class="pageHeader">Items</h1>
+    <div class="row subtotalRow" style="margin-left: 0px">
+      <span class="subtotal" style="width: 50%"
         >1 x {{ this.$store.state.selectedDish[0].dishName }}</span
       >
-      <span class="subtotalPrice" style="margin-left:0px"
+      <span class="subtotalPrice" style="margin-left: 0px"
         >$ {{ this.$store.state.selectedDish[0].totalPrice }}</span
       >
     </div>
     <p class="restaurantName">
       {{ this.$store.state.selectedDish[0].restaurantName }}
     </p>
-    <hr width=80% style="margin:5% auto;">
+    <hr width="80%" style="margin: 5% auto" />
     <div class="tip">
       <p class="tip-text">Add Tip</p>
       <div class="row tip-row">
@@ -48,7 +44,7 @@
         <span class="subtotalPrice">$ {{ this.totalPrice }}</span>
       </div>
       <button id="checkout-button" @click="redirectCheckout()">
-        <div class="continue btn" style="margin-top:20%">
+        <div class="continue btn" style="margin-top: 20%">
           <span class="continue-text">Continue</span>
         </div>
       </button>
@@ -87,7 +83,7 @@ export default {
     return {
       totalPrice: this.$store.state.selectedDish[0].totalPrice || 0.0,
       custom_tip_display: false,
-      crave_order: {}
+      crave_order: {},
     };
   },
   mounted() {
@@ -136,12 +132,10 @@ export default {
     },
     calculateTip() {
       this.totalPrice = this.$store.state.selectedDish[0].totalPrice;
-      let tip_percent = String(
-        document.getElementsByClassName("active")[0].innerText
-      );
+      let tip_percent = String(document.getElementsByClassName("active")[0].innerText);
       if (tip_percent.includes("%")) {
         tip_percent = String(
-          document.getElementsByClassName("active")[0].innerText
+          document.getElementsByClassName("active")[0].innerText,
         ).split("%")[0];
       }
       if (tip_percent === "more") {
@@ -150,9 +144,13 @@ export default {
       console.log(tip_percent);
       this.$store.commit("addTip", tip_percent);
       this.totalPrice = this.totalPrice + this.totalPrice * (tip_percent / 100);
-      this.totalPrice =
-        Math.round((this.totalPrice + Number.EPSILON) * 100) / 100;
-      this.$store.commit("addTotal", this.totalPrice);
+      this.totalPrice = Math.round((this.totalPrice + Number.EPSILON) * 100) / 100;
+      let price_total = String(this.totalPrice).split(".");
+      if (price_total[1].length === 1) {
+        price_total[1] = price_total[1] + "0";
+      }
+      let price = Number(price_total[0] + price_total[1]);
+      this.$store.commit("addTotal", price);
       console.log(this.totalPrice);
     },
     async redirectCheckout() {
@@ -162,7 +160,7 @@ export default {
       //   "pk_live_51IHapJHffvLfnsDr4945gyj6tVauBRS1stvmTnhwQVYcEpSd7dpsP7lWAIeIRNhHJOj2BwfbnEkyLNb4HBDVzjvN00NQn7GIo0",
       // );
       const stripe = await loadStripe(
-        "pk_test_51IHapJHffvLfnsDrRlM7r5h0fQ74a4ID4POuwgFN5EiBLUc9sLNRmUzrWj3pgW8h8IDOW3O772baHXbwsZRCozOF00HxKYIi8x"
+        "pk_test_51IHapJHffvLfnsDrRlM7r5h0fQ74a4ID4POuwgFN5EiBLUc9sLNRmUzrWj3pgW8h8IDOW3O772baHXbwsZRCozOF00HxKYIi8x",
       );
 
       console.log(this.$store.state.selectedDish[0].id);
@@ -177,9 +175,9 @@ export default {
       this.crave_order = await this.$apollo
         .mutate({
           mutation: ADD_ORDER,
-          variables: { object: this.$store.state.order }
+          variables: { object: this.$store.state.order },
         })
-        .catch(res => {
+        .catch((res) => {
           console.log(res);
         });
 
@@ -188,8 +186,8 @@ export default {
         const response = await fetch(
           `https://g3ahlnhgjd.execute-api.us-east-1.amazonaws.com/dev?productID=${this.$store.state.selectedDish[0].dishName}&price=${price}&orderID=${orderID}`,
           {
-            method: "GET"
-          }
+            method: "GET",
+          },
         );
 
         let responseJSON = await response.json();
@@ -198,7 +196,7 @@ export default {
         const sessionID = responseJSON.sessionID;
 
         const result = await stripe.redirectToCheckout({
-          sessionId: sessionID
+          sessionId: sessionID,
         });
 
         if (result.error) {
@@ -206,8 +204,8 @@ export default {
         }
       }
       // When the customer clicks on the button, redirect them to Checkout.
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
