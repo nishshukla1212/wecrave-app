@@ -26,7 +26,7 @@
           {{ this.$store.state.selectedDish[0].restaurantName }}
         </p>
         <p class="dishPrice">
-          $ {{ this.$store.state.selectedDish[0].totalPrice }}
+          $ {{ this.$store.state.selectedDish[0].totalPrice.toFixed(2) }}
         </p>
       </div>
       <p class="condition">
