@@ -90,7 +90,7 @@
         </div>
 
         <button :disabled="invalid">
-          <div class="continue btn">
+          <div class="continue btn dlvyBtn">
             <span class="continue-text">Continue</span>
           </div>
         </button>
@@ -209,4 +209,9 @@ export default {
   }
 };
 </script>
-<style></style>
+<style lang="scss">
+  .dlvyBtn{
+   min-height: 45px;
+   margin-top: 45%;
+  }
+</style>
