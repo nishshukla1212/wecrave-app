@@ -40,8 +40,8 @@ module.exports.hello = async event => {
       }
     ],
     mode: "payment",
-    success_url: `https://blissful-kirch-3476bb.netlify.app/#/success?orderID=${orderID}`,
-    cancel_url: `https://blissful-kirch-3476bb.netlify.app/#/payment?orderID=${orderID}`
+    success_url: `https://order.wecrave.co/#/success?orderID=${orderID}`,
+    cancel_url: `https://order.wecrave.co/#/payment?orderID=${orderID}`
   });
 
   return {

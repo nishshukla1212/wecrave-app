@@ -6,6 +6,7 @@ import SecondScreen from "../components/SecondScreen.vue";
 import DeliveryScreen from "../components/DeliveryScreen.vue";
 import FeedbackScreen from "../components/FeedbackScreen.vue";
 import Success from "../components/Success.vue";
+import FeedbackComplete from "../components/FeedBackComplete.vue";
 import Cancel from "../components/Cancel.vue";
 
 Vue.use(VueRouter);
@@ -45,6 +46,11 @@ const routes = [
     path: "/cancel",
     name: "Cancel",
     component: Cancel
+  },
+  {
+    path: "/feedbackComplete",
+    name: "feedbackComplete",
+    component: FeedbackComplete
   }
 ];
 

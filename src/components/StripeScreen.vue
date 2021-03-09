@@ -14,13 +14,22 @@
         >1 x {{ this.$store.state.selectedDish[0].dishName }}</span
       >
       <span class="subtotalPrice" style="margin-left: 0px"
-        >$ {{ this.$store.state.selectedDish[0].totalPrice }}</span
+        >$ {{ this.$store.state.selectedDish[0].totalPrice.toFixed(2) }}</span
       >
     </div>
     <p class="restaurantName">
       {{ this.$store.state.selectedDish[0].restaurantName }}
     </p>
     <hr width="80%" style="margin: 5% auto" />
+    <div class="dlvyDetails">
+      <div class="dlvyHdrTxt">Delivery Details</div>
+      <div class="dlvyDetailsTxt">
+        {{ this.$store.state.order.name }}<br />
+        {{ this.$store.state.order.phone }}<br />
+        {{ this.$store.state.order.streetAddress }}<br />
+        {{ this.$store.state.order.aptNo }}
+      </div>
+    </div>
     <div class="tip">
       <p class="tip-text">Add Tip</p>
       <div class="row tip-row">
@@ -41,7 +50,7 @@
       </div>
       <div class="row subtotalRow">
         <span class="subtotal">Subtotal</span>
-        <span class="subtotalPrice">$ {{ this.totalPrice }}</span>
+        <span class="subtotalPrice">$ {{ this.totalPrice.toFixed(2) }}</span>
       </div>
       <button id="checkout-button" @click="redirectCheckout()">
         <div class="continue btn" style="margin-top: 20%">
@@ -220,5 +229,25 @@ p.restaurantName {
   display: flex;
   margin-right: 1%;
   color: rgba(63, 63, 70, 0.5);
+}
+div.dlvyDetails {
+  margin-top: 16px;
+  margin-left: 30px;
+  margin-bottom: 10%;
+  font-family: Nunito;
+  font-style: normal;
+  align-items: center;
+  font-weight: bold;
+}
+div.dlvyHdrTxt {
+  font-size: 20px;
+  line-height: 27px;
+  color: #000000;
+  margin-bottom: 2%;
+}
+div.dlvyDetailsTxt {
+  font-size: 16px;
+  line-height: 28px;
+  color: rgba(63, 63, 70, 0.62);
 }
 </style>
