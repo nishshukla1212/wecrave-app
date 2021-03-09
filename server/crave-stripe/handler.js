@@ -4,16 +4,21 @@ const stripe = require("stripe")(
   "sk_test_51IHapJHffvLfnsDrGKqR703ylaKbSADWaxAIhrOX5dI9DtWsq5iK13hV4Uyj4oOFMKwVdmMaxot436Nl9LccPqEB00kcpPJBQi"
 );
 let nodemailer = require("nodemailer");
+var sgTransport = require('nodemailer-sendgrid-transport');
 let aws = require("@aws-sdk/client-ses");
+
+var options = {
+  auth: {
+      api_key: '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'
+  }
+}
 
 const ses = new aws.SES({
   apiVersion: "2010-12-01",
   region: "us-east-1"
 });
 // create Nodemailer SES transporter
-let transporter = nodemailer.createTransport({
-  SES: { ses, aws }
-});
+let transporter = nodemailer.createTransport(sgTransport(options));
 module.exports.hello = async event => {
   console.log(event);
   let orderID = event.queryStringParameters.orderID;
@@ -40,8 +45,8 @@ module.exports.hello = async event => {
       }
     ],
     mode: "payment",
-    success_url: `https://blissful-kirch-3476bb.netlify.app/#/success?orderID=${orderID}`,
-    cancel_url: `https://blissful-kirch-3476bb.netlify.app/#/payment?orderID=${orderID}`
+    success_url: `https://order.wecrave.co/#/success?orderID=${orderID}`,
+    cancel_url: `https://order.wecrave.co/#/payment?orderID=${orderID}`
   });
 
   return {
@@ -78,7 +83,7 @@ module.exports.sendEmail = (event, context, callback) => {
   transporter.sendMail(
     {
       from: "nish.12.shukla@gmail.com",
-      to: order.email.toString(),
+      to: "nish.12.shukla@gmail.com",
       subject: `Crave - ${order.orderID.toString()}`,
       html: `
       New Order Arrived!<br>

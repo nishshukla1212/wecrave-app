@@ -43,14 +43,6 @@
           <span class="continue-text">Submit</span>
         </div>
       </button>
-      <div class="thanks">
-        <div class="thanksText">
-          Thank you for your feedback!
-        </div>
-        <div class="thanksLogo">
-          <img src="~@/assets/logo.png" width="71px" height="48px" />
-        </div>
-      </div>
     </form>
   </div>
 </template>
@@ -108,6 +100,10 @@ export default {
         });
         document.getElementsByClassName("thanks")[0].classList.remove("thanks")
       this.successful = true;
+      this.goToNextPage();
+    },
+    goToNextPage() {
+      this.$router.push({path: "/feedbackComplete"});
     }
   }
 };
