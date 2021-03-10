@@ -4,12 +4,8 @@
       <div class="logo-container">
         <img src="~@/assets/logo.png" width="53px" height="36px" />
       </div>
-      <h1 class="craveTitle">
-        Crave
-      </h1>
-      <p class="craveSubtitle">
-        Content-first food discovery platform
-      </p>
+      <h1 class="craveTitle">Crave</h1>
+      <p class="craveSubtitle">Content-first food discovery platform</p>
       <div class="selectBox">
         <select v-on:change="filterResults()" v-model="selectedInfluencer">
           <option
@@ -31,7 +27,7 @@
       <input
         type="text"
         class="text-field"
-        style="margin-left:0px;margin-top: 2%;width:80%;height:43px"
+        style="margin-left: 0px; margin-top: 2%; width: 80%; height: 43px"
         v-model="dishName"
         name="dishName"
         id="dishName"
@@ -41,13 +37,8 @@
 
       <div class="container">
         <div class="gallery">
-          <div
-            :key="url.id"
-            v-for="url in pictureURLS"
-            class="gallery-item"
-            tabindex="0"
-          >
-            <img :src="url.img" class="gallery-image" alt="" />
+          <div :key="url.id" v-for="url in pictureURLS" class="gallery-item" tabindex="0">
+            <img :src="url.img" class="gallery-image" alt="" onerror="this.style.display='none'"/>
             <div class="gallery-item-info" @click="selectDish(url.id)">
               <ul class="noPadding">
                 <li class="gallery-item-dish-name">
@@ -77,10 +68,7 @@ export const GET_DISHES = gql`
     crave_restaurants(
       where: {
         influencerName: { _eq: $influencerName }
-        _or: {
-          dishPrice: { _gt: $dishPrice }
-          _or: { dishName: { _eq: $dishName } }
-        }
+        _or: { dishPrice: { _gt: $dishPrice }, _or: { dishName: { _eq: $dishName } } }
       }
     ) {
       deliveryFee
@@ -110,7 +98,7 @@ export default {
       selectedInfluencer: this.$route.query.id ? this.$route.query.id : "",
       zone: "Lower East",
       dishName: "",
-      zones: ["Lower East", "Lower West", "Midtown", "Upper East", "Upper West"]
+      zones: ["Lower East", "Lower West", "Midtown", "Upper East", "Upper West"],
     };
   },
   mounted() {
@@ -133,66 +121,55 @@ export default {
       this.crave_restaurants = await this.$apollo
         .query({
           query: GET_DISHES,
-          variables: variables
+          variables: variables,
         })
-        .catch(res => {
+        .catch((res) => {
           console.log(res);
         });
-      this.$store.commit(
-        "addDishes",
-        this.crave_restaurants.data.crave_restaurants
-      );
+      this.$store.commit("addDishes", this.crave_restaurants.data.crave_restaurants);
       if (this.selectedInfluencer.length > 0) {
         this.influencerNames.push("@" + this.selectedInfluencer);
       } else {
-        this.$store.state.dishes.forEach(dish => {
+        this.$store.state.dishes.forEach((dish) => {
           if (!this.influencerNames.includes("@" + dish.influencerName)) {
             this.influencerNames.push("@" + dish.influencerName);
           }
         });
       }
       this.selectedInfluencer = this.influencerNames[0];
-      this.$store.state.dishes.forEach(dish => {
+      this.$store.state.dishes.forEach((dish) => {
         this.pictureURLS.push({
-          img:
-            "https://scraped-info-from-ig.s3.amazonaws.com/" +
-            dish.picID +
-            ".jpg",
+          img: "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
           description: dish.dishName,
-          id: dish.id
+          id: dish.id,
         });
       });
       this.filterResults();
     },
     selectDish(id) {
-      let selectedDish = this.$store.state.dishes.filter(
-        dish => dish.id === id
-      );
+      let selectedDish = this.$store.state.dishes.filter((dish) => dish.id === id);
       this.$store.commit("addSelectedDish", selectedDish);
       this.$router.push("/secondScreen");
     },
     filterResults() {
       let filteredDishes = this.$store.state.dishes.filter(
-        dish =>
+        (dish) =>
           dish.influencerName === this.selectedInfluencer.split("@")[1] &&
           dish.zone === this.zone &&
           String(dish.dishName)
             .toLowerCase()
-            .includes(String(this.dishName).toLowerCase())
+            .includes(String(this.dishName).toLowerCase()),
       );
       this.pictureURLS = [];
-      filteredDishes.forEach(dish => {
+      filteredDishes.forEach((dish) => {
         this.pictureURLS.push({
-          img:
-            "https://scraped-info-from-ig.s3.amazonaws.com/" +
-            dish.picID +
-            ".jpg",
+          img: "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
           description: dish.dishName,
-          id: dish.id
+          id: dish.id,
         });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -229,7 +206,7 @@ export default {
 
   color: rgba(63, 63, 70, 0.62);
 }
-.paddedleft{
+.paddedleft {
   padding-left: 50px;
   padding-top: 25px;
 }
