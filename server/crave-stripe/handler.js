@@ -1,7 +1,7 @@
 "use strict";
 
 const stripe = require("stripe")(
-  "sk_test_51IHapJHffvLfnsDrGKqR703ylaKbSADWaxAIhrOX5dI9DtWsq5iK13hV4Uyj4oOFMKwVdmMaxot436Nl9LccPqEB00kcpPJBQi"
+  process.env.STRIPE_KEY
 );
 let nodemailer = require("nodemailer");
 var sgTransport = require('nodemailer-sendgrid-transport');
@@ -9,7 +9,7 @@ let aws = require("@aws-sdk/client-ses");
 
 var options = {
   auth: {
-      api_key: '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'
+      api_key: process.env.SG_API_KEY
   }
 }
 
