@@ -1,7 +1,7 @@
 "use strict";
 
 const stripe = require("stripe")(
-  "sk_test_51IHapJHffvLfnsDrGKqR703ylaKbSADWaxAIhrOX5dI9DtWsq5iK13hV4Uyj4oOFMKwVdmMaxot436Nl9LccPqEB00kcpPJBQi"
+  process.env.STRIPE_KEY
 );
 let nodemailer = require("nodemailer");
 var sgTransport = require('nodemailer-sendgrid-transport');
