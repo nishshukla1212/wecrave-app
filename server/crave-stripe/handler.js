@@ -9,7 +9,7 @@ let aws = require("@aws-sdk/client-ses");
 
 var options = {
   auth: {
-      api_key: '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'
+      api_key: process.env.SG_API_KEY
   }
 }
 
