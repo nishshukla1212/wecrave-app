@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Add from "../views/AddForm.vue";
 import StripeScreen from "../components/StripeScreen.vue";
 import SecondScreen from "../components/SecondScreen.vue";
 import DeliveryScreen from "../components/DeliveryScreen.vue";
@@ -36,6 +37,11 @@ const routes = [
     path: "/feedback",
     name: "FeedbackScreen",
     component: FeedbackScreen
+  },
+  {
+    path: "/add/*",
+    name: "Add",
+    component: Add
   },
   {
     path: "/success",
