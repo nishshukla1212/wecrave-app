@@ -84,6 +84,7 @@ export const GET_DISHES = gql`
       tax
       totalPrice
       zone
+      pictureURL
     }
   }
 `;
@@ -139,7 +140,7 @@ export default {
       this.selectedInfluencer = this.influencerNames[0];
       this.$store.state.dishes.forEach((dish) => {
         this.pictureURLS.push({
-          img: "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
+          img: dish.pictureURL ? dish.pictureURL : "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
           description: dish.dishName,
           id: dish.id,
         });
@@ -162,8 +163,10 @@ export default {
       );
       this.pictureURLS = [];
       filteredDishes.forEach((dish) => {
+        console.log(dish.picID);
+        console.log(dish.pictureURL);
         this.pictureURLS.push({
-          img: "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
+          img: dish.pictureURL ? dish.pictureURL : "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
           description: dish.dishName,
           id: dish.id,
         });

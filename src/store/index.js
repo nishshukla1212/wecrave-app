@@ -22,6 +22,7 @@ export default new Vuex.Store({
       successful: false,
       deliveryNotes: '',
     },
+    urls:[],
     dishes: [],
     selectedDish:{},
   },
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     addSelectedDish(state, dish) {
       state.selectedDish = dish
+    },
+    addUrls(state, url) {
+      state.urls.push(url);
     },
     addOrderID(state, orderID) {
       state.order.orderID = orderID
