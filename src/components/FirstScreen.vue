@@ -8,6 +8,7 @@
       <p class="craveSubtitle">Content-first food discovery platform</p>
       <div class="selectBox">
         <select v-on:change="filterResults()" v-model="selectedInfluencer">
+          <option value="All">All Influencers</option>
           <option
             :key="influencer"
             v-for="influencer in influencerNames"
@@ -19,6 +20,7 @@
       </div>
       <div class="selectBox">
         <select v-model="zone" v-on:change="filterResults()">
+          <option value="All">All Zones</option>
           <option :key="zone" v-for="zone in zones" :value="zone">
             {{ zone }}
           </option>
@@ -38,8 +40,13 @@
       <div class="container">
         <div class="gallery">
           <div :key="url.id" v-for="url in pictureURLS" class="gallery-item" tabindex="0">
-            <img :src="url.img" class="gallery-image" alt="" onerror="this.style.display='none'"/>
-            <div class="gallery-item-info" @click="selectDish(url.id)">
+            <img
+              :src="url.img"
+              class="gallery-image"
+              alt=""
+              onerror="this.style.display='none'"
+            />
+            <div  class="gallery-item-info" @click="selectDish(url.id)">
               <ul class="noPadding">
                 <li class="gallery-item-dish-name">
                   <span class="visually-hidden">Dish:</span
@@ -59,17 +66,9 @@
 import gql from "graphql-tag";
 
 export const GET_DISHES = gql`
-  query GET_DISHES(
-    $influencerName: String
-    $dishPrice: numeric!
-    $zone: String
-    $dishName: String
-  ) {
+  query GET_DISHES($dishPrice: numeric!, $zone: String, $dishName: String) {
     crave_restaurants(
-      where: {
-        influencerName: { _eq: $influencerName }
-        _or: { dishPrice: { _gt: $dishPrice }, _or: { dishName: { _eq: $dishName } } }
-      }
+      where: { dishPrice: { _gt: $dishPrice }, _or: { dishName: { _eq: $dishName } } }
     ) {
       deliveryFee
       dishName
@@ -96,8 +95,10 @@ export default {
       influencerNames: [],
       pictureURLS: [],
       dishPrice: 0.0,
-      selectedInfluencer: this.$route.query.id ? this.$route.query.id : "",
-      zone: "Lower East",
+      selectedInfluencer: this.$route.path.toLowerCase().includes("profile")
+        ? this.$route.path.split("/")[2]
+        : "",
+      zone: "All",
       dishName: "",
       zones: ["Lower East", "Lower West", "Midtown", "Upper East", "Upper West"],
     };
@@ -108,9 +109,9 @@ export default {
   methods: {
     async query() {
       let variables = {};
-      if (this.selectedInfluencer.length > 0) {
-        variables["influencerName"] = this.selectedInfluencer;
-      }
+      // if (this.selectedInfluencer.length > 0) {
+      //   variables["influencerName"] = this.selectedInfluencer;
+      // }
       if (this.zone.length > 0) {
         variables["zone"] = this.zone;
       }
@@ -128,19 +129,19 @@ export default {
           console.log(res);
         });
       this.$store.commit("addDishes", this.crave_restaurants.data.crave_restaurants);
-      if (this.selectedInfluencer.length > 0) {
-        this.influencerNames.push("@" + this.selectedInfluencer);
-      } else {
-        this.$store.state.dishes.forEach((dish) => {
-          if (!this.influencerNames.includes("@" + dish.influencerName)) {
-            this.influencerNames.push("@" + dish.influencerName);
-          }
-        });
-      }
-      this.selectedInfluencer = this.influencerNames[0];
+
+      this.$store.state.dishes.forEach((dish) => {
+        if (!this.influencerNames.includes("@" + dish.influencerName)) {
+          this.influencerNames.push("@" + dish.influencerName);
+        }
+      });
+
+      this.selectedInfluencer = "@" + this.selectedInfluencer;
       this.$store.state.dishes.forEach((dish) => {
         this.pictureURLS.push({
-          img: dish.pictureURL ? dish.pictureURL : "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
+          img: dish.pictureURL
+            ? dish.pictureURL
+            : "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
           description: dish.dishName,
           id: dish.id,
         });
@@ -153,23 +154,51 @@ export default {
       this.$router.push("/secondScreen");
     },
     filterResults() {
-      let filteredDishes = this.$store.state.dishes.filter(
-        (dish) =>
-          dish.influencerName === this.selectedInfluencer.split("@")[1] &&
-          dish.zone === this.zone &&
-          String(dish.dishName)
-            .toLowerCase()
-            .includes(String(this.dishName).toLowerCase()),
-      );
+      let filteredDishes;
+      if (this.selectedInfluencer === "All") {
+        filteredDishes = this.$store.state.dishes;
+        if (this.zone !== "All") {
+          filteredDishes = filteredDishes.filter(
+            (dish) =>
+              dish.zone === this.zone &&
+              String(dish.dishName)
+                .toLowerCase()
+                .includes(String(this.dishName).toLowerCase()),
+          );
+        }
+      } else {
+        if (this.zone === "All") {
+          filteredDishes = this.$store.state.dishes.filter(
+            (dish) =>
+              dish.influencerName === this.selectedInfluencer.split("@")[1] &&
+              String(dish.dishName)
+                .toLowerCase()
+                .includes(String(this.dishName).toLowerCase()),
+          );
+        } else {
+          filteredDishes = this.$store.state.dishes.filter(
+            (dish) =>
+              dish.influencerName === this.selectedInfluencer.split("@")[1] &&
+              dish.zone === this.zone &&
+              String(dish.dishName)
+                .toLowerCase()
+                .includes(String(this.dishName).toLowerCase()),
+          );
+        }
+      }
       this.pictureURLS = [];
       filteredDishes.forEach((dish) => {
         console.log(dish.picID);
         console.log(dish.pictureURL);
-        this.pictureURLS.push({
-          img: dish.pictureURL ? dish.pictureURL : "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
-          description: dish.dishName,
-          id: dish.id,
-        });
+        if (dish.picID || dish.pictureURL) {
+          this.pictureURLS.push({
+            img: dish.pictureURL
+              ? dish.pictureURL
+              : "https://scraped-info-from-ig.s3.amazonaws.com/" + dish.picID + ".jpg",
+            description: dish.dishName,
+            id: dish.id,
+          });
+        }
       });
     },
   },

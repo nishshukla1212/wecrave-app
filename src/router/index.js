@@ -19,6 +19,11 @@ const routes = [
     component: Home
   },
   {
+    path: "/profile/*",
+    name: "Profile",
+    component: Home
+  },
+  {
     path: "/payment",
     name: "StripeScreen",
     component: StripeScreen
