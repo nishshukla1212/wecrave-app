@@ -42,7 +42,6 @@
               />
               <p class="error">{{ errors[0] }}</p>
               </ValidationProvider>
-              <ValidationProvider name="orderLink" :rules="{ regex: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/ }" v-slot="{ errors }">
               <input
                 type="url"
                 class="text-field"
@@ -51,8 +50,6 @@
                 v-model="orderLink"
                 placeholder="Order Link"
               />
-              <p class="error">{{ errors[0] }}</p>
-              </ValidationProvider>
               <input
                 type="number"
                 class="text-field"
