@@ -92,7 +92,6 @@ div.food-preview {
     width: 259px;
     height: 25px;
     margin-top: 5%;
-
     font-family: Nunito;
     font-style: normal;
     font-weight: bold;
@@ -106,7 +105,7 @@ div.food-preview {
   p.restaurantName {
     width: 168px;
     height: 24px;
-
+margin-top: 5%;
     font-family: Nunito;
     font-style: normal;
     font-weight: bold;
@@ -118,14 +117,14 @@ div.food-preview {
   }
   p.dishPrice {
     height: 24px;
-
+margin-top: 5%;
     font-family: Nunito;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
     line-height: 27px;
     display: flex;
-    padding-left: 20%;
+    margin-left: 15px;
     color: #000000;
     right: 0 !important;
     text-align: right !important;

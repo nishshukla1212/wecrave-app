@@ -2,7 +2,7 @@
   <div class="paddedleft">
     <div class="landing-page">
       <div class="logo-container">
-        <img src="~@/assets/logo.png" width="53px" height="36px" />
+        <img src="~@/assets/logo.png" @click="goToLandingPage()" width="53px" height="36px" />
       </div>
       <h1 class="craveTitle">Crave</h1>
       <p class="craveSubtitle">Content-first food discovery platform</p>
@@ -107,11 +107,11 @@ export default {
     this.query();
   },
   methods: {
+    goToLandingPage(){
+      window.location.href = "www.wecrave.co";
+    },
     async query() {
       let variables = {};
-      // if (this.selectedInfluencer.length > 0) {
-      //   variables["influencerName"] = this.selectedInfluencer;
-      // }
       if (this.zone.length > 0) {
         variables["zone"] = this.zone;
       }
