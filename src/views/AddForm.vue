@@ -2,74 +2,84 @@
   <div>
     <div v-if="successful === false" class="landing-page">
       <ValidationObserver v-slot="{ handleSubmit, invalid }">
-      <form @submit.prevent="handleSubmit(addRow)">
-      <div class="row" :key="count" v-for="count in counter">
-        <div class="rowGroup">
-          <div class="col-md-12" style="margin-left:12px">
-            <dropzone></dropzone>
-          </div>
-          <div class="col-md-12">
-            <div class="inputGroup">
-              <ValidationProvider name="zone" rules="required" v-slot="{ errors }">
-              <div class="selectBox" style="margin-left: 30px; width: 315px">
-                <select v-model="zone">
-                  <option :key="zone" v-for="zone in zones" :value="zone">
-                    {{ zone }}
-                  </option>
-                </select>
+        <form @submit.prevent="handleSubmit(addRow)">
+          <div class="row" :key="count" v-for="count in counter">
+            <div class="rowGroup">
+              <div class="col-md-12" style="margin-left: 12px">
+                <dropzone></dropzone>
               </div>
-              <p class="error">{{ errors[0] }}</p>
-              </ValidationProvider>
-              <ValidationProvider name="restaurantName" rules="required" v-slot="{ errors }">
-              <input
-                type="text"
-                class="text-field"
-                name="restaurantName"
-                id="restaurantName"
-                v-model="restaurantName"
-                placeholder="Restaurant Name"
-              />
-              <p class="error">{{ errors[0] }}</p>
-              </ValidationProvider>
-              <ValidationProvider name="dishName" rules="required" v-slot="{ errors }">
-              <input
-                type="text"
-                class="text-field"
-                name="dishName"
-                id="dishName"
-                v-model="dishName"
-                placeholder="Dish Name"
-              />
-              <p class="error">{{ errors[0] }}</p>
-              </ValidationProvider>
-              <input
-                type="url"
-                class="text-field"
-                name="orderLink"
-                id="orderLink"
-                v-model="orderLink"
-                placeholder="Order Link"
-              />
-              <input
-                type="number"
-                class="text-field"
-                name="dishPrice"
-                id="dishPrice"
-                v-model="dishPrice"
-                placeholder="Dish Price"
-              />
+              <div class="col-md-12">
+                <div class="inputGroup">
+                  <ValidationProvider name="zone" rules="required" v-slot="{ errors }">
+                    <div class="selectBox" style="margin-left: 30px; width: 315px">
+                      <select v-model="zone">
+                        <option :key="zone" v-for="zone in zones" :value="zone">
+                          {{ zone }}
+                        </option>
+                      </select>
+                    </div>
+                    <p class="error">{{ errors[0] }}</p>
+                  </ValidationProvider>
+                  <ValidationProvider
+                    name="restaurantName"
+                    rules="required"
+                    v-slot="{ errors }"
+                  >
+                    <input
+                      type="text"
+                      class="text-field"
+                      name="restaurantName"
+                      id="restaurantName"
+                      v-model="restaurantName"
+                      placeholder="Restaurant Name"
+                    />
+                    <p class="error">{{ errors[0] }}</p>
+                  </ValidationProvider>
+                  <ValidationProvider
+                    name="dishName"
+                    rules="required"
+                    v-slot="{ errors }"
+                  >
+                    <input
+                      type="text"
+                      class="text-field"
+                      name="dishName"
+                      id="dishName"
+                      v-model="dishName"
+                      placeholder="Dish Name"
+                    />
+                    <p class="error">{{ errors[0] }}</p>
+                  </ValidationProvider>
+                  <input
+                    type="url"
+                    class="text-field"
+                    name="orderLink"
+                    id="orderLink"
+                    v-model="orderLink"
+                    placeholder="Order Link"
+                  />
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    class="text-field"
+                    name="dishPrice"
+                    id="dishPrice"
+                    v-model="dishPrice"
+                    placeholder="Dish Price"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <button  :disabled="invalid">
-        <div class="continue btn dlvyBtn" style="margin-top: 50px">
-          <span class="continue-text">Add</span>
-        </div>
-      </button>
-    </form>
-    </ValidationObserver>
+          <button :disabled="invalid">
+            <div class="continue btn dlvyBtn" style="margin-top: 50px">
+              <span class="continue-text">Add</span>
+            </div>
+          </button>
+        </form>
+      </ValidationObserver>
     </div>
     <div v-if="successful === true" class="landing-page">
       <div class="logo-container">
@@ -92,7 +102,7 @@
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { extend } from "vee-validate";
-import { required, email, length, numeric,regex } from "vee-validate/dist/rules";
+import { required, email, length, numeric, regex } from "vee-validate/dist/rules";
 import Dropzone from "../components/Dropzone";
 import gql from "graphql-tag";
 
@@ -135,7 +145,7 @@ export default {
       counter: 1,
       restaurantName: "",
       dishName: "",
-      dishPrice: 0.00,
+      dishPrice: 0.0,
       orderLink: "https://www.test.com",
       zones: ["Lower West", "Lower East", "Midtown", "Upper West", "Upper East"],
       zone: "Lower East",
@@ -146,7 +156,7 @@ export default {
   components: {
     Dropzone,
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
   mounted() {
     this.influencerName = this.$route.path.split("/")[2];
