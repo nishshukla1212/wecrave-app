@@ -163,8 +163,8 @@ export default {
       request.pictureURL = await s3URL;
       request.influencerName = this.influencerName;
       request.dishName = this.dishName;
-      request.dishPrice = this.dishPrice.toFixed(2);
-      request.totalPrice = this.dishPrice.toFixed(2);
+      request.dishPrice = this.dishPrice;
+      request.totalPrice = this.dishPrice;
       request.restaurantName = this.restaurantName;
       request.orderLink = this.orderLink;
       request.zone = this.zone;
