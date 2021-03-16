@@ -53,7 +53,6 @@
               />
               <p class="error">{{ errors[0] }}</p>
               </ValidationProvider>
-              <ValidationProvider name="dishPrice" rules="numeric" v-slot="{ errors }">
               <input
                 type="number"
                 class="text-field"
@@ -62,8 +61,6 @@
                 v-model="dishPrice"
                 placeholder="Dish Price"
               />
-              <p class="error">{{ errors[0] }}</p>
-              </ValidationProvider>
             </div>
           </div>
         </div>
