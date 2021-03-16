@@ -97,7 +97,7 @@ export default {
       dishPrice: 0.0,
       selectedInfluencer: this.$route.path.toLowerCase().includes("profile")
         ? this.$route.path.split("/")[2]
-        : "",
+        : "All",
       zone: "All",
       dishName: "",
       zones: ["Lower East", "Lower West", "Midtown", "Upper East", "Upper West"],

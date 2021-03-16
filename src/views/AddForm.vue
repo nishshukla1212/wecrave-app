@@ -5,7 +5,7 @@
       <form @submit.prevent="handleSubmit(addRow)">
       <div class="row" :key="count" v-for="count in counter">
         <div class="rowGroup">
-          <div class="col-md-12" style="margin-left: 30px">
+          <div class="col-md-12" style="margin-left:12px">
             <dropzone></dropzone>
           </div>
           <div class="col-md-12">

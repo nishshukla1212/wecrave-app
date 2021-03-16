@@ -45,10 +45,10 @@ export default {
   name: "SecondScreen",
   data() {
     return {
-      previewImageUrl:
+      previewImageUrl: this.$store.state.selectedDish[0].picID ? 
         "https://scraped-info-from-ig.s3.amazonaws.com/" +
         this.$store.state.selectedDish[0].picID +
-        ".jpg"
+        ".jpg" : this.$store.state.selectedDish[0].pictureURL
     };
   },
   methods: {
