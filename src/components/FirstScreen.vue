@@ -8,7 +8,7 @@
       <p class="craveSubtitle">Content-first food discovery platform</p>
       <div class="selectBox">
         <select v-on:change="filterResults()" v-model="selectedInfluencer">
-          <option value="All">All Influencers</option>
+          <option value="@All">All Influencers</option>
           <option
             :key="influencer"
             v-for="influencer in influencerNames"
@@ -97,7 +97,7 @@ export default {
       dishPrice: 0.0,
       selectedInfluencer: this.$route.path.toLowerCase().includes("profile")
         ? this.$route.path.split("/")[2]
-        : "All",
+        : "@All",
       zone: "All",
       dishName: "",
       zones: ["Lower East", "Lower West", "Midtown", "Upper East", "Upper West"],
@@ -136,7 +136,6 @@ export default {
         }
       });
 
-      this.selectedInfluencer = "@" + this.selectedInfluencer;
       this.$store.state.dishes.forEach((dish) => {
         this.pictureURLS.push({
           img: dish.pictureURL
@@ -155,7 +154,8 @@ export default {
     },
     filterResults() {
       let filteredDishes;
-      if (this.selectedInfluencer === "All") {
+      console.log(this.selectedInfluencer);
+      if (this.selectedInfluencer === "@All") {
         filteredDishes = this.$store.state.dishes;
         if (this.zone !== "All") {
           filteredDishes = filteredDishes.filter(
