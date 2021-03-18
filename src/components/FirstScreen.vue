@@ -174,32 +174,28 @@ export default {
           );
         }
       }  else {
-        if (this.zone === "All") {
+        filteredDishes = this.$store.state.dishes;
+        if (this.zone !== "All") {
           filteredDishes = filteredDishes.filter(
             (dish) =>
-            dish.influencerName === this.selectedInfluencer &&
-              String(dish.dishName)
-                .toLowerCase()
-                .includes(String(this.dishName).toLowerCase()),
-          );
-        }else{
-           filteredDishes = filteredDishes.filter(
-            (dish) =>
-            dish.influencerName === this.selectedInfluencer &&
-              String(dish.dishName)
-                .toLowerCase()
-                .includes(String(this.dishName).toLowerCase()),
-          );
-        }
-          filteredDishes = this.$store.state.dishes.filter(
-            (dish) =>
-              dish.influencerName === this.selectedInfluencer.split("@")[1] &&
+            dish.influencerName === this.selectedInfluencer.split("@")[1]  &&
               dish.zone === this.zone &&
               String(dish.dishName)
                 .toLowerCase()
                 .includes(String(this.dishName).toLowerCase()),
           );
+        }else{
+          if (this.zone === "All") {
+          filteredDishes = filteredDishes.filter(
+            (dish) =>
+            dish.influencerName === this.selectedInfluencer.split("@")[1] &&
+              String(dish.dishName)
+                .toLowerCase()
+                .includes(String(this.dishName).toLowerCase()),
+          );
         }
+        }
+        
       this.pictureURLS = [];
       filteredDishes.forEach((dish) => {
         console.log(dish.picID);
