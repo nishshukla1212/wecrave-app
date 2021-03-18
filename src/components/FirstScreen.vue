@@ -210,8 +210,9 @@ export default {
           });
         }
       });
-    },
-  },
+    }
+  }
+}
 };
 </script>
 
