@@ -177,6 +177,7 @@ export default {
         if (this.zone === "All") {
           filteredDishes = filteredDishes.filter(
             (dish) =>
+            dish.influencerName === this.selectedInfluencer &&
               String(dish.dishName)
                 .toLowerCase()
                 .includes(String(this.dishName).toLowerCase()),
@@ -184,6 +185,7 @@ export default {
         }else{
            filteredDishes = filteredDishes.filter(
             (dish) =>
+            dish.influencerName === this.selectedInfluencer &&
               String(dish.dishName)
                 .toLowerCase()
                 .includes(String(this.dishName).toLowerCase()),
