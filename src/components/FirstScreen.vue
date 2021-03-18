@@ -174,6 +174,21 @@ export default {
           );
         }
       }  else {
+        if (this.zone === "All") {
+          filteredDishes = filteredDishes.filter(
+            (dish) =>
+              String(dish.dishName)
+                .toLowerCase()
+                .includes(String(this.dishName).toLowerCase()),
+          );
+        }else{
+           filteredDishes = filteredDishes.filter(
+            (dish) =>
+              String(dish.dishName)
+                .toLowerCase()
+                .includes(String(this.dishName).toLowerCase()),
+          );
+        }
           filteredDishes = this.$store.state.dishes.filter(
             (dish) =>
               dish.influencerName === this.selectedInfluencer.split("@")[1] &&
