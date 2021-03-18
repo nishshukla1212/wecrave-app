@@ -172,9 +172,10 @@ export default {
       const autocomplete = new google.maps.places.Autocomplete(input, options);
       input.addEventListener("change", () => {
         input.innerHTML = autocomplete;
+        console.log(autocomplete);
         let fieldId = Object.keys(autocomplete.gm_bindings_.fields)[0]
-        input.value = autocomplete.gm_bindings_.fields[fieldId.toString()].De.formattedPrediction
-        this.address=autocomplete.gm_bindings_.fields[fieldId.toString()].De.formattedPrediction
+        input.value = autocomplete.gm_bindings_.fields[fieldId.toString()].Ie.formattedPrediction
+        this.address=autocomplete.gm_bindings_.fields[fieldId.toString()].Ie.formattedPrediction
       });
     },
     goToNextPage() {
