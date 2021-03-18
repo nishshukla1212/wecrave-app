@@ -17,6 +17,7 @@
         >$ {{ this.$store.state.selectedDish[0].totalPrice.toFixed(2) }}</span
       >
     </div>
+    <br>
     <p class="restaurantName">
       {{ this.$store.state.selectedDish[0].restaurantName }}
     </p>

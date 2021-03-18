@@ -165,17 +165,15 @@ export default {
                 .toLowerCase()
                 .includes(String(this.dishName).toLowerCase()),
           );
-        }
-      } else {
-        if (this.zone === "All") {
-          filteredDishes = this.$store.state.dishes.filter(
+        }else{
+           filteredDishes = filteredDishes.filter(
             (dish) =>
-              dish.influencerName === this.selectedInfluencer.split("@")[1] &&
               String(dish.dishName)
                 .toLowerCase()
                 .includes(String(this.dishName).toLowerCase()),
           );
-        } else {
+        }
+      }  else {
           filteredDishes = this.$store.state.dishes.filter(
             (dish) =>
               dish.influencerName === this.selectedInfluencer.split("@")[1] &&
@@ -185,7 +183,6 @@ export default {
                 .includes(String(this.dishName).toLowerCase()),
           );
         }
-      }
       this.pictureURLS = [];
       filteredDishes.forEach((dish) => {
         console.log(dish.picID);

@@ -146,7 +146,7 @@ export default {
       restaurantName: "",
       dishName: "",
       dishPrice: 0.0,
-      orderLink: "https://www.test.com",
+      orderLink: "https://www.district9.com",
       zones: ["Lower West", "Lower East", "Midtown", "Upper West", "Upper East"],
       zone: "Lower East",
       successful: false,
