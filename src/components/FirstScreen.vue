@@ -96,7 +96,7 @@ export default {
       pictureURLS: [],
       dishPrice: 0.0,
       selectedInfluencer: this.$route.path.toLowerCase().includes("profile")
-        ? this.$route.path.split("/")[2]
+        ? "@"+this.$route.path.split("/")[2]
         : "@All",
       zone: "All",
       dishName: "",
@@ -111,8 +111,11 @@ export default {
       window.location.href = "https://wecrave.co/";
     },
     async query() {
-      this.selectedInfluencer = this.$store.state.selectedDish.length ?  '@'+ this.$store.state.selectedDish[0].influencerName : this.$route.path.toLowerCase().includes("profile")
+      console.log(this.$route.path.toLowerCase().includes("profile")
         ? this.$route.path.split("/")[2]
+        : "@All")
+      this.selectedInfluencer = this.$store.state.selectedDish.length ?  '@'+ this.$store.state.selectedDish[0].influencerName : this.$route.path.toLowerCase().includes("profile")
+        ? "@"+this.$route.path.split("/")[2]
         : "@All";      
         this.zone = this.$store.state.selectedDish.length ?   this.$store.state.selectedDish[0].zone : 'All';
       let variables = {};
@@ -158,7 +161,6 @@ export default {
     },
     filterResults() {
       let filteredDishes;
-      console.log(this.selectedInfluencer);
       if (this.selectedInfluencer === "@All") {
         filteredDishes = this.$store.state.dishes;
         if (this.zone !== "All") {
