@@ -108,9 +108,13 @@ export default {
   },
   methods: {
     goToLandingPage(){
-      window.location.href = "www.wecrave.co";
+      window.location.href = "https://www.wecrave.co";
     },
     async query() {
+      this.selectedInfluencer = this.$store.state.selectedDish.length ?  '@'+ this.$store.state.selectedDish[0].influencerName : this.$route.path.toLowerCase().includes("profile")
+        ? this.$route.path.split("/")[2]
+        : "@All";      
+        this.zone = this.$store.state.selectedDish.length ?   this.$store.state.selectedDish[0].zone : 'All';
       let variables = {};
       if (this.zone.length > 0) {
         variables["zone"] = this.zone;
@@ -178,24 +182,22 @@ export default {
         if (this.zone !== "All") {
           filteredDishes = filteredDishes.filter(
             (dish) =>
-            dish.influencerName === this.selectedInfluencer.split("@")[1]  &&
+            '@'+dish.influencerName === this.selectedInfluencer  &&
               dish.zone === this.zone &&
               String(dish.dishName)
                 .toLowerCase()
                 .includes(String(this.dishName).toLowerCase()),
           );
         }else{
-          if (this.zone === "All") {
           filteredDishes = filteredDishes.filter(
             (dish) =>
-            dish.influencerName === this.selectedInfluencer.split("@")[1] &&
+            '@'+ dish.influencerName === this.selectedInfluencer &&
               String(dish.dishName)
                 .toLowerCase()
                 .includes(String(this.dishName).toLowerCase()),
           );
         }
-        }
-        
+      }
       this.pictureURLS = [];
       filteredDishes.forEach((dish) => {
         console.log(dish.picID);
@@ -213,7 +215,6 @@ export default {
     }
   }
 }
-};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

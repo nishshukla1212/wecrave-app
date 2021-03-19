@@ -18,7 +18,7 @@
       <p class="pictureCredits">
         <span>@{{ this.$store.state.selectedDish[0].influencerName }}</span>
       </p>
-      <h1 class="dishName">
+        <h1 class="dishName">
         {{ this.$store.state.selectedDish[0].dishName }}
       </h1>
       <div class="row" style="margin-left:0px;">
@@ -90,19 +90,20 @@ div.food-preview {
   }
   h1.dishName {
     width: 259px;
-    height: 25px;
     margin-top: 5%;
+    line-height: fit-content;
     font-family: Nunito;
     font-style: normal;
     font-weight: bold;
     font-size: 20px;
-    line-height: 27px;
-    display: flex;
+    display: block;
     align-items: center;
+    position: relative;
 
     color: #000000;
   }
   p.restaurantName {
+    position: relative;
     width: 168px;
     height: 24px;
 margin-top: 5%;
@@ -110,7 +111,6 @@ margin-top: 5%;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
-    display: flex;
     margin-right: 1%;
     margin-left: 0;
     color: rgba(63, 63, 70, 0.5);
