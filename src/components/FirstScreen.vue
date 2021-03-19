@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     goToLandingPage(){
-      window.location.href = "https://www.wecrave.co";
+      window.location.href = "https://wecrave.co/";
     },
     async query() {
       this.selectedInfluencer = this.$store.state.selectedDish.length ?  '@'+ this.$store.state.selectedDish[0].influencerName : this.$route.path.toLowerCase().includes("profile")
