@@ -5,14 +5,10 @@
         <button @click="goBack()">
           <span class="close">X</span>
         </button>
-        <h1 class="pageTitle">
-          Delivery Details
-        </h1>
+        <h1 class="pageTitle">Delivery Details</h1>
       </div>
     </div>
-    <h1 class="pageHeader">
-      Deliver to
-    </h1>
+    <h1 class="pageHeader">Deliver to</h1>
     <ValidationObserver v-slot="{ handleSubmit, invalid }">
       <form @submit.prevent="handleSubmit(goToNextPage)">
         <ValidationProvider name="Name" rules="required" v-slot="{ errors }">
@@ -41,11 +37,7 @@
           />
           <p class="error">{{ errors[0] }}</p>
         </ValidationProvider>
-        <ValidationProvider
-          name="Email"
-          rules="required|email"
-          v-slot="{ errors }"
-        >
+        <ValidationProvider name="Email" rules="required|email" v-slot="{ errors }">
           <input
             type="email"
             class="text-field"
@@ -62,7 +54,7 @@
             class="text-field"
             name="address"
             id="address"
-            v-model="address"
+            ref="address"
             placeholder="Address"
           />
           <p class="error">{{ errors[0] }}</p>
@@ -81,12 +73,12 @@
           name="instructions"
           id="instructions"
           v-model="instructions"
-          style="margin-bottom:20px;margin-top:32px"
+          style="margin-bottom: 20px; margin-top: 32px"
           placeholder="Instructions"
         />
-        <div class="row etaRow" style="padding-left:18px">
+        <div class="row etaRow" style="padding-left: 18px">
           <p class="eta">Estimated Delivery Time:</p>
-          <p class="etaTime" style="margin-left:12%">30 mins</p>
+          <p class="etaTime" style="margin-left: 12%">30 mins</p>
         </div>
 
         <button :disabled="invalid">
@@ -104,42 +96,42 @@ import { extend } from "vee-validate";
 import { required, email, length, numeric } from "vee-validate/dist/rules";
 extend("required", {
   ...required,
-  message: "This field is required"
+  message: "This field is required",
 });
 
 // Add the email rule
 extend("email", {
   ...email,
-  message: "This field must be a valid email"
+  message: "This field must be a valid email",
 });
 
 extend("length", {
   ...length,
-  message: "This field must be 10 digits"
+  message: "This field must be 10 digits",
 });
 extend("numeric", {
   ...numeric,
-  message: "This field must be numeric"
+  message: "This field must be numeric",
 });
 
 export default {
   name: "DeliveryScreen",
   data() {
     return {
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      address2: '',
-      instructions: '',
+      name: "",
+      email: "",
+      phone: "",
+      address: null,
+      address2: "",
+      instructions: "",
       totalPrice: this.$store.state.selectedDish[0].totalPrice || 0.0,
-      custom_tip_display: false
+      custom_tip_display: false,
     };
   },
 
   components: {
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
   },
   mounted() {
     this.initMapAutoComplete();
@@ -158,61 +150,93 @@ export default {
         north: center.lat + 0.03,
         south: center.lat - 0.03,
         east: center.lng + 0.03,
-        west: center.lng - 0.03
+        west: center.lng - 0.03,
       };
-      const input = document.getElementById("address");
       const options = {
         bounds: defaultBounds,
         componentRestrictions: { country: "us" },
         fields: ["address_components", "geometry", "icon", "name"],
         origin: center,
-        strictBounds: true
+        strictBounds: true,
       };
       // eslint-disable-next-line no-undef
-      const autocomplete = new google.maps.places.Autocomplete(input, options);
-      input.addEventListener("change", () => {
-        input.innerHTML = autocomplete;
-        console.log(autocomplete);
-        let fieldId = Object.keys(autocomplete.gm_bindings_.fields)[0]
-        input.value = autocomplete.gm_bindings_.fields[fieldId.toString()].Ie.formattedPrediction
-        this.address=autocomplete.gm_bindings_.fields[fieldId.toString()].Ie.formattedPrediction
-      });
+      this.address = new google.maps.places.Autocomplete(this.$refs.address, options);
+      this.address.addListener('place_changed', this.address)
     },
     goToNextPage() {
       this.$store.commit(
         "addInfluencerName",
-        this.$store.state.selectedDish[0].influencerName
+        this.$store.state.selectedDish[0].influencerName,
       );
       this.$store.commit("addName", this.name);
       this.$store.commit("addEmail", this.email);
       this.$store.commit("addPhone", this.phone);
-      this.$store.commit(
-        "addStreetAddress",
-        document.getElementById("address").value
-      );
+      this.$store.commit("addStreetAddress", document.getElementById("address").value);
       this.$store.commit("addAptNo", this.address2);
       this.$store.commit("addDeliveryNotes", this.instructions);
       this.$store.commit("addZone", this.$store.state.selectedDish[0].zone);
-      this.$store.commit(
-        "addOrderLink",
-        this.$store.state.selectedDish[0].orderLink
-      );
+      this.$store.commit("addOrderLink", this.$store.state.selectedDish[0].orderLink);
       this.$store.commit(
         "addRestaurantName",
-        this.$store.state.selectedDish[0].restaurantName
+        this.$store.state.selectedDish[0].restaurantName,
       );
-      this.$store.commit(
-        "addDishName",
-        this.$store.state.selectedDish[0].dishName
-      );
+      this.$store.commit("addDishName", this.$store.state.selectedDish[0].dishName);
       this.$router.push("/payment");
-    }
-  }
+    },
+    fillInAddress(autocomplete) {
+      // Get the place details from the autocomplete object.
+      const place = autocomplete.getPlace();
+      let address1 = "";
+      let postcode = "";
+
+      // Get each component of the address from the place details,
+      // and then fill-in the corresponding field on the form.
+      // place.address_components are google.maps.GeocoderAddressComponent objects
+      // which are documented at http://goo.gle/3l5i5Mr
+      for (const component of place.address_components) {
+        const componentType = component.types[0];
+
+        switch (componentType) {
+          case "street_number": {
+            address1 = `${component.long_name} ${address1}`;
+            break;
+          }
+
+          case "route": {
+            address1 += component.short_name;
+            break;
+          }
+
+          case "postal_code": {
+            postcode = `${component.long_name}${postcode}`;
+            break;
+          }
+
+          case "postal_code_suffix": {
+            postcode = `${postcode}-${component.long_name}`;
+            break;
+          }
+          case "locality":
+            document.querySelector("#locality").value = component.long_name;
+            break;
+
+          case "administrative_area_level_1": {
+            document.querySelector("#state").value = component.short_name;
+            break;
+          }
+          case "country":
+            document.querySelector("#country").value = component.long_name;
+            break;
+        }
+      }
+    
+    },
+  },
 };
 </script>
 <style lang="scss">
-  .dlvyBtn{
-   min-height: 45px;
-   margin-top: 45%;
-  }
+.dlvyBtn {
+  min-height: 45px;
+  margin-top: 45%;
+}
 </style>
