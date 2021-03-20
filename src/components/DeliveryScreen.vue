@@ -54,7 +54,7 @@
             class="text-field"
             name="address"
             id="address"
-            ref="address"
+            v-model="address"
             placeholder="Address"
           />
           <p class="error">{{ errors[0] }}</p>
@@ -160,8 +160,12 @@ export default {
         strictBounds: true,
       };
       // eslint-disable-next-line no-undef
-      this.address = new google.maps.places.Autocomplete(this.$refs.address, options);
-      this.address.addListener('place_changed', this.address)
+      let addressFill = new google.maps.places.Autocomplete(document.getElementById("address"), options);
+      addressFill.addListener('place_changed', () =>{
+        document.getElementById("address").value = addressFill.getPlace().name;
+        document.getElementById("address").innerHTML = addressFill.getPlace().name;
+        this.address  = addressFill.getPlace().name;
+      })
     },
     goToNextPage() {
       this.$store.commit(
@@ -183,55 +187,7 @@ export default {
       this.$store.commit("addDishName", this.$store.state.selectedDish[0].dishName);
       this.$router.push("/payment");
     },
-    fillInAddress(autocomplete) {
-      // Get the place details from the autocomplete object.
-      const place = autocomplete.getPlace();
-      let address1 = "";
-      let postcode = "";
-
-      // Get each component of the address from the place details,
-      // and then fill-in the corresponding field on the form.
-      // place.address_components are google.maps.GeocoderAddressComponent objects
-      // which are documented at http://goo.gle/3l5i5Mr
-      for (const component of place.address_components) {
-        const componentType = component.types[0];
-
-        switch (componentType) {
-          case "street_number": {
-            address1 = `${component.long_name} ${address1}`;
-            break;
-          }
-
-          case "route": {
-            address1 += component.short_name;
-            break;
-          }
-
-          case "postal_code": {
-            postcode = `${component.long_name}${postcode}`;
-            break;
-          }
-
-          case "postal_code_suffix": {
-            postcode = `${postcode}-${component.long_name}`;
-            break;
-          }
-          case "locality":
-            document.querySelector("#locality").value = component.long_name;
-            break;
-
-          case "administrative_area_level_1": {
-            document.querySelector("#state").value = component.short_name;
-            break;
-          }
-          case "country":
-            document.querySelector("#country").value = component.long_name;
-            break;
-        }
-      }
-    
-    },
-  },
+  }
 };
 </script>
 <style lang="scss">
