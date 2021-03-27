@@ -26,6 +26,7 @@ export default {
       url: "/",
       // Since we're going to do a `PUT` upload to S3 directly
       method: "put",
+      maxFiles: 1,
       // Hijack the xhr.send since Dropzone always upload file by using formData
       // ref: https://github.com/danialfarid/ng-file-upload/issues/743
       sending(file, xhr) {
@@ -45,6 +46,10 @@ export default {
       dictDefaultMessage: document.querySelector("#dropzone-message").innerHTML,
       // We're going to process each file manually (see `accept` below)
       autoProcessQueue: false,
+      maxfilesexceeded: function(file) {
+        vm.dropzone.removeAllFiles();
+        vm.dropzone.addFile(file);
+    },
       // Here we request a signed upload URL when a file being accepted
       accept(file, done) {
         console.log(file);

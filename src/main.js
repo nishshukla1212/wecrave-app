@@ -9,12 +9,21 @@ import App from "./App.vue";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUtensils } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import VueMixpanel from 'vue-mixpanel';
 
 library.add(faUtensils)
+
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueApollo);
+
+Vue.use(VueMixpanel, {
+  token: 'c01874473fcda11ee9c05f7c41f3bae8',
+  config: {
+    debug: true
+  }
+});
 
 Vue.config.productionTip = true;
 

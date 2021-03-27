@@ -68,6 +68,7 @@
                     v-model="dishPrice"
                     placeholder="Dish Price"
                   />
+                  <p class="error" v-if="dishPrice === 0">This picture would not show on your profile if the price is 0</p>
                 </div>
               </div>
             </div>

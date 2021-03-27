@@ -5,7 +5,7 @@
         <img src="~@/assets/logo.png" @click="goToLandingPage()" width="53px" height="36px" />
       </div>
       <h1 class="craveTitle">Crave</h1>
-      <p class="craveSubtitle">Content-first food discovery platform</p>
+      <p class="craveSubtitle">Better way to order, save local restaurants, powered by influencers</p>
       <div class="selectBox">
         <select v-on:change="filterResults()" v-model="selectedInfluencer">
           <option value="@All">All Influencers</option>
@@ -104,6 +104,10 @@ export default {
     };
   },
   mounted() {
+    this.$mixpanel.register_once({
+        "referrer": document.referrer
+    });
+    this.$mixpanel.track("First screen");
     this.query();
   },
   methods: {

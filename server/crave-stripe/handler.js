@@ -82,8 +82,8 @@ module.exports.sendEmail = (event, context, callback) => {
   let order = JSON.parse(event.body).order[0];
   transporter.sendMail(
     {
-      from: "nish.12.shukla@gmail.com",
-      to: "nish.12.shukla@gmail.com",
+      from: "nish@wecrave.co",
+      to: "help@wecrave.co",
       subject: `Crave - ${order.orderID.toString()}`,
       html: `
       New Order Arrived!<br>
@@ -107,13 +107,21 @@ module.exports.sendEmail = (event, context, callback) => {
       if (!err) {
         transporter.sendMail(
           {
-            from: "nish.12.shukla@gmail.com",
+            from: "nish@wecrave.co",
             to: order.email.toString(),
-            subject: `Crave - ${order.orderID.toString()}`,
+            subject: `Your Wecrave.co order  # ${order.orderID.toString()} is on the way!`,
             html: `
-            Thank you for your Crave order!<br>
-            Order ID: ${order.orderID}<br>
-            name: ${order.name}<br>
+            Crave order!<br>
+            Order Number: ${order.orderID}<br>
+            1 Item
+            Delivery Estimate: ${new Date().toLocaleString()}
+            Delivery Estimate: ${new Date().toLocaleString()}
+            Address: ${order.streetAddress}<br>, aptNo  : ${order.aptNo}<br>
+            Deliver to:  ${order.name}<br>
+            Order total: ${order.total}<br>
+            Cancel or inquire about your order at <a href="mailto:help@wecrave.co">help@wecrave.co</a>
+            <hr>
+            Unless otherwise noted, items sold by <a href="https://www.wecrave.co">Crave</a> are subject to sales tax in select states in accordance with the applicable laws of that state.
             `,
             ses: {
               // optional extra arguments for SendRawEmail

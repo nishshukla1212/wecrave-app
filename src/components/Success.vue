@@ -65,6 +65,7 @@ export default {
     };
   },
   mounted() {
+    this.$mixpanel.track("Success screen");
     this.orderID = this.$route.query.orderID;
     if (this.orderID.length > 0) {
       this.sendEmail();

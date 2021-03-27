@@ -51,6 +51,12 @@ export default {
         ".jpg" : this.$store.state.selectedDish[0].pictureURL
     };
   },
+  mounted() {
+    this.$mixpanel.register({
+        "SelectedInfluencerName": this.$store.state.selectedDish[0].influencerName
+    });
+    this.$mixpanel.track("Second screen");
+  },
   methods: {
     goBack() {
       this.$router.go(-1);

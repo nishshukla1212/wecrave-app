@@ -77,6 +77,7 @@ export default {
   }),
 
   mounted() {
+    this.$mixpanel.track("Feecback screen");
     this.orderID = this.$route.query.orderID;
   },
   methods: {

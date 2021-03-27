@@ -20,7 +20,10 @@
 
 <script>
 export default {
-  name:"FeedbackComplete"
+  name:"FeedbackComplete",
+  mounted() {
+    this.$mixpanel.track("Feedback Complete Screen");
+  },
 }
 </script>
 

@@ -97,6 +97,7 @@ export default {
     };
   },
   mounted() {
+    this.$mixpanel.track("Stripe screen");
     this.addTipListeners();
   },
   methods: {

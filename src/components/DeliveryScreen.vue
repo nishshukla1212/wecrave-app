@@ -10,7 +10,7 @@
     </div>
     <h1 class="pageHeader">Deliver to</h1>
     <ValidationObserver v-slot="{ handleSubmit, invalid }">
-      <form @submit.prevent="handleSubmit(goToNextPage)">
+      <form id="deliveryForm" @submit.prevent="handleSubmit(goToNextPage)">
         <ValidationProvider name="Name" rules="required" v-slot="{ errors }">
           <input
             type="text"
@@ -134,6 +134,7 @@ export default {
     ValidationProvider,
   },
   mounted() {
+    this.$mixpanel.track("Delivery screen");
     this.initMapAutoComplete();
   },
   methods: {
@@ -168,6 +169,7 @@ export default {
       })
     },
     goToNextPage() {
+      this.$mixpanel.track_forms('#deliveryForm', 'Details Updated');
       this.$store.commit(
         "addInfluencerName",
         this.$store.state.selectedDish[0].influencerName,
